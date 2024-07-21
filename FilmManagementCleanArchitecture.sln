@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmManagement.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmManagement.API", "FilmManagement.API\FilmManagement.API.csproj", "{B83DC366-EFD1-43ED-82E8-F8CBD86483C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmManagement.Persistence", "FilmManagement.Persistence\FilmManagement.Persistence.csproj", "{EF14499E-2854-44A4-9022-AE7F87AF0962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B83DC366-EFD1-43ED-82E8-F8CBD86483C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B83DC366-EFD1-43ED-82E8-F8CBD86483C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B83DC366-EFD1-43ED-82E8-F8CBD86483C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF14499E-2854-44A4-9022-AE7F87AF0962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF14499E-2854-44A4-9022-AE7F87AF0962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF14499E-2854-44A4-9022-AE7F87AF0962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF14499E-2854-44A4-9022-AE7F87AF0962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

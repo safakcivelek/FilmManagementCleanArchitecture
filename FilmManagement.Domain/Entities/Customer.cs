@@ -1,6 +1,6 @@
 ﻿namespace FilmManagement.Domain.Entities
 {
-    public class Customer
+    public class Customer: BaseEntity<Guid>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

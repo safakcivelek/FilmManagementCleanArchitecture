@@ -1,11 +1,11 @@
 ﻿namespace FilmManagement.Domain.Entities
 {
-    public class Purchase
+    public class Purchase : BaseEntity<Guid>
     {
         public decimal Price { get; set; }
 
-        public int CustomerId { get; set; }
-        public int FimId { get; set; }
+        public Guid CustomerId { get; set; }
+        public Guid FimId { get; set; }
 
         public Film Film { get; set; }
         public Customer Customer { get; set; }
