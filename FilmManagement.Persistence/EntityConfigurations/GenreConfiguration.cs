@@ -17,6 +17,46 @@ namespace FilmManagement.Persistence.EntityConfigurations
             builder.Property(g => g.CreatedDate).HasColumnName("CreatedDate").IsRequired();
             builder.Property(g => g.UpdatedDate).HasColumnName("UpdatedDate");
             builder.Property(g => g.DeletedDate).HasColumnName("DeletedDate");
+
+            // Seed Data
+            builder.HasData(GetGenreSeeds());
+        }
+
+        private IEnumerable<Genre> GetGenreSeeds()
+        {
+            List<Genre> genres = new()
+            {
+                new Genre
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Aksiyon",
+                    Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
+                    CreatedDate = DateTime.UtcNow
+                },
+                new Genre
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Dram",
+                    Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
+                    CreatedDate = DateTime.UtcNow
+                },
+                new Genre
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Bilim Kurgu",
+                    Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
+                    CreatedDate = DateTime.UtcNow
+                },
+                new Genre
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Fantastik",
+                    Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
+                    CreatedDate = DateTime.UtcNow
+                }
+            };
+
+            return genres;
         }
     }
 }
