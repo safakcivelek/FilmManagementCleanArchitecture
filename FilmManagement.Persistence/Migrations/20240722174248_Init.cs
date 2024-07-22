@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FilmManagement.Persistence.Migrations
 {
     /// <inheritdoc />
@@ -102,6 +104,34 @@ namespace FilmManagement.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomerFavoriteGenre",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerFavoriteGenre", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerFavoriteGenre_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomerFavoriteGenre_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FilmActors",
                 columns: table => new
                 {
@@ -187,6 +217,27 @@ namespace FilmManagement.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "Name", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { new Guid("0469329d-da3f-4448-a09c-0dc216ff3a78"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(711), null, "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.", "Aksiyon", null },
+                    { new Guid("4c80763a-104c-4811-83b3-782f880fce48"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(724), null, "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.", "Fantastik", null },
+                    { new Guid("7419b988-790e-437f-8d03-f27e98bbd008"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(719), null, "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.", "Dram", null },
+                    { new Guid("acb179b1-a2a8-446b-8733-ec6b6b5f1071"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(722), null, "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.", "Bilim Kurgu", null }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerFavoriteGenre_CustomerId",
+                table: "CustomerFavoriteGenre",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerFavoriteGenre_GenreId",
+                table: "CustomerFavoriteGenre",
+                column: "GenreId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_FilmActors_ActorId",
                 table: "FilmActors",
@@ -226,6 +277,9 @@ namespace FilmManagement.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CustomerFavoriteGenre");
+
             migrationBuilder.DropTable(
                 name: "FilmActors");
 

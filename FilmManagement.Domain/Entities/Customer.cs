@@ -7,5 +7,6 @@
         public string Email { get; set; }
 
         public ICollection<Purchase> Purchases { get; set; }
+        public ICollection<CustomerFavoriteGenre> CustomerFavoriteGenres { get; set; }
     }
 }

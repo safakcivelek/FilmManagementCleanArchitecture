@@ -99,6 +99,40 @@ namespace FilmManagement.Persistence.Migrations
                     b.ToTable("Customers", (string)null);
                 });
 
+            modelBuilder.Entity("FilmManagement.Domain.Entities.CustomerFavoriteGenre", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("CustomerFavoriteGenre", (string)null);
+                });
+
             modelBuilder.Entity("FilmManagement.Domain.Entities.Director", b =>
                 {
                     b.Property<Guid>("Id")
@@ -288,29 +322,29 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9500e965-a73e-47e0-a34e-5a1be2f28e59"),
-                            CreatedDate = new DateTime(2024, 7, 22, 16, 3, 48, 391, DateTimeKind.Utc).AddTicks(6131),
+                            Id = new Guid("0469329d-da3f-4448-a09c-0dc216ff3a78"),
+                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(711),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("8bdb6954-aef1-4fa2-83b8-757bc8ece691"),
-                            CreatedDate = new DateTime(2024, 7, 22, 16, 3, 48, 391, DateTimeKind.Utc).AddTicks(6141),
+                            Id = new Guid("7419b988-790e-437f-8d03-f27e98bbd008"),
+                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(719),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("cf013735-7f72-404f-8907-e810baac857b"),
-                            CreatedDate = new DateTime(2024, 7, 22, 16, 3, 48, 391, DateTimeKind.Utc).AddTicks(6143),
+                            Id = new Guid("acb179b1-a2a8-446b-8733-ec6b6b5f1071"),
+                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(722),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("1a94fecf-8548-4d2e-ab58-d1076510a32a"),
-                            CreatedDate = new DateTime(2024, 7, 22, 16, 3, 48, 391, DateTimeKind.Utc).AddTicks(6210),
+                            Id = new Guid("4c80763a-104c-4811-83b3-782f880fce48"),
+                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(724),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
                             Name = "Fantastik"
                         });
@@ -355,6 +389,25 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasIndex("FilmId");
 
                     b.ToTable("Purchases", (string)null);
+                });
+
+            modelBuilder.Entity("FilmManagement.Domain.Entities.CustomerFavoriteGenre", b =>
+                {
+                    b.HasOne("FilmManagement.Domain.Entities.Customer", "Customer")
+                        .WithMany("CustomerFavoriteGenres")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FilmManagement.Domain.Entities.Genre", "Genre")
+                        .WithMany("CustomerFavoriteGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("FilmManagement.Domain.Entities.Film", b =>
@@ -432,6 +485,8 @@ namespace FilmManagement.Persistence.Migrations
 
             modelBuilder.Entity("FilmManagement.Domain.Entities.Customer", b =>
                 {
+                    b.Navigation("CustomerFavoriteGenres");
+
                     b.Navigation("Purchases");
                 });
 
@@ -451,6 +506,8 @@ namespace FilmManagement.Persistence.Migrations
 
             modelBuilder.Entity("FilmManagement.Domain.Entities.Genre", b =>
                 {
+                    b.Navigation("CustomerFavoriteGenres");
+
                     b.Navigation("FilmGenres");
                 });
 #pragma warning restore 612, 618

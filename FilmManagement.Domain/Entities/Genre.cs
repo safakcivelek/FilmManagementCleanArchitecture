@@ -6,5 +6,6 @@
         public string? Description { get; set; }
 
         public ICollection<FilmGenre> FilmGenres { get; set; }
+        public ICollection<CustomerFavoriteGenre> CustomerFavoriteGenres { get; set; }
     }
 }
