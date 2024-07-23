@@ -15,6 +15,7 @@ namespace FilmManagement.Persistence.EntityConfigurations
             builder.Property(f => f.Price).HasColumnName("Price").HasColumnType("decimal(18,2)");
             builder.Property(f => f.Description).HasColumnName("Description").HasMaxLength(500);
             builder.Property(f => f.Year).HasColumnName("Year");
+            builder.Property(f => f.IsActive).HasColumnName("IsActive");
 
             builder.Property(f => f.CreatedDate).HasColumnName("CreatedDate").IsRequired();
             builder.Property(f => f.UpdatedDate).HasColumnName("UpdatedDate");

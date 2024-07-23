@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmManagement.Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240722174248_Init")]
+    [Migration("20240723100025_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -195,6 +195,10 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<Guid>("DirectorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -325,29 +329,29 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0469329d-da3f-4448-a09c-0dc216ff3a78"),
-                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(711),
+                            Id = new Guid("26d977c8-76f0-4877-a51d-2ac3c6d258fa"),
+                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1147),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("7419b988-790e-437f-8d03-f27e98bbd008"),
-                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(719),
+                            Id = new Guid("d254df4f-a78d-483e-9235-d5167181ef99"),
+                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1155),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("acb179b1-a2a8-446b-8733-ec6b6b5f1071"),
-                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(722),
+                            Id = new Guid("94a73562-f599-4942-bfab-275859a30b2b"),
+                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1157),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("4c80763a-104c-4811-83b3-782f880fce48"),
-                            CreatedDate = new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(724),
+                            Id = new Guid("9922be58-f8a9-4745-9bd2-524444ed282a"),
+                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1159),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
                             Name = "Fantastik"
                         });

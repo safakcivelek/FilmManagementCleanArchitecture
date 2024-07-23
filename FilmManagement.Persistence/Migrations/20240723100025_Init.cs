@@ -87,6 +87,7 @@ namespace FilmManagement.Persistence.Migrations
                     Year = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -222,10 +223,10 @@ namespace FilmManagement.Persistence.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("0469329d-da3f-4448-a09c-0dc216ff3a78"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(711), null, "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.", "Aksiyon", null },
-                    { new Guid("4c80763a-104c-4811-83b3-782f880fce48"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(724), null, "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.", "Fantastik", null },
-                    { new Guid("7419b988-790e-437f-8d03-f27e98bbd008"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(719), null, "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.", "Dram", null },
-                    { new Guid("acb179b1-a2a8-446b-8733-ec6b6b5f1071"), new DateTime(2024, 7, 22, 17, 42, 48, 92, DateTimeKind.Utc).AddTicks(722), null, "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.", "Bilim Kurgu", null }
+                    { new Guid("26d977c8-76f0-4877-a51d-2ac3c6d258fa"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1147), null, "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.", "Aksiyon", null },
+                    { new Guid("94a73562-f599-4942-bfab-275859a30b2b"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1157), null, "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.", "Bilim Kurgu", null },
+                    { new Guid("9922be58-f8a9-4745-9bd2-524444ed282a"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1159), null, "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.", "Fantastik", null },
+                    { new Guid("d254df4f-a78d-483e-9235-d5167181ef99"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1155), null, "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.", "Dram", null }
                 });
 
             migrationBuilder.CreateIndex(
