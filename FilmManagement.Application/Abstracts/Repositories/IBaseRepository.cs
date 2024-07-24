@@ -12,7 +12,7 @@ namespace FilmManagement.Application.Abstracts.Repositories
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true);
 
-        Task<ICollection<TEntity>> GetListAsync(
+        Task<IList<TEntity>> GetListAsync(
             Expression<Func<TEntity, bool>>? predicate = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true);

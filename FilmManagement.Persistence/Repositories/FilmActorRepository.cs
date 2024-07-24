@@ -5,9 +5,9 @@ using FilmManagement.Persistence.Contexts;
 
 namespace FilmManagement.Persistence.Repositories
 {
-    public class FilmActor : EfBaseRepository<FilmActor, Guid, BaseDbContext>, IFilmActorRepository
+    public class FilmActorRepository : EfBaseRepository<FilmActor, Guid, BaseDbContext>, IFilmActorRepository
     {
-        public FilmActor(BaseDbContext context) : base(context)
+        public FilmActorRepository(BaseDbContext context) : base(context)
         {
         }
     }

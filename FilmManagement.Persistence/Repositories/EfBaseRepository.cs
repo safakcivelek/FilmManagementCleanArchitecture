@@ -28,7 +28,7 @@ namespace FilmManagement.Persistence.Repositories
             return await queryable.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<ICollection<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true)
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
