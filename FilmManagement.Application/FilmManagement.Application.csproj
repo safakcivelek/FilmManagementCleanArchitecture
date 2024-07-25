@@ -7,11 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FilmManagement.Domain\FilmManagement.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Actors\" />
+    <Folder Include="Features\Customers\" />
+    <Folder Include="Features\CustomerFavoriteGenres\" />
+    <Folder Include="Features\Directors\" />
+    <Folder Include="Features\FilmActors\" />
+    <Folder Include="Features\FilmGenres\" />
+    <Folder Include="Features\Genres\" />
+    <Folder Include="Features\Purchases\" />
   </ItemGroup>
 
 </Project>
