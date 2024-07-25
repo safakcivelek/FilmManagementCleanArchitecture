@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FilmManagement.Application\FilmManagement.Application.csproj" />
     <ProjectReference Include="..\FilmManagement.Persistence\FilmManagement.Persistence.csproj" />
   </ItemGroup>
 
