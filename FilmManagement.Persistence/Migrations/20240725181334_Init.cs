@@ -22,7 +22,8 @@ namespace FilmManagement.Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,8 @@ namespace FilmManagement.Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +57,8 @@ namespace FilmManagement.Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +74,8 @@ namespace FilmManagement.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,11 +91,11 @@ namespace FilmManagement.Persistence.Migrations
                     Year = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DirectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +117,8 @@ namespace FilmManagement.Persistence.Migrations
                     GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,7 +146,8 @@ namespace FilmManagement.Persistence.Migrations
                     ActorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,7 +175,8 @@ namespace FilmManagement.Persistence.Migrations
                     FilmId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,7 +206,8 @@ namespace FilmManagement.Persistence.Migrations
                     FilmId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,13 +228,13 @@ namespace FilmManagement.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Genres",
-                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "Name", "UpdatedDate" },
+                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsActive", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("26d977c8-76f0-4877-a51d-2ac3c6d258fa"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1147), null, "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.", "Aksiyon", null },
-                    { new Guid("94a73562-f599-4942-bfab-275859a30b2b"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1157), null, "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.", "Bilim Kurgu", null },
-                    { new Guid("9922be58-f8a9-4745-9bd2-524444ed282a"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1159), null, "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.", "Fantastik", null },
-                    { new Guid("d254df4f-a78d-483e-9235-d5167181ef99"), new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1155), null, "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.", "Dram", null }
+                    { new Guid("190acda3-6d5f-4be6-90db-41ced64137bd"), new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3242), null, "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.", true, "Bilim Kurgu", null },
+                    { new Guid("9cbac9f6-c50b-4067-869c-60dfaa5b14fa"), new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3230), null, "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.", true, "Aksiyon", null },
+                    { new Guid("9da51501-57ed-4c38-b883-0633c4b72333"), new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3244), null, "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.", true, "Fantastik", null },
+                    { new Guid("f1126f56-e03f-498a-918f-a6e242364b2d"), new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3239), null, "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.", true, "Dram", null }
                 });
 
             migrationBuilder.CreateIndex(

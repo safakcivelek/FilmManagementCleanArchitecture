@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmManagement.Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240723100025_Init")]
+    [Migration("20240725181334_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -45,6 +45,9 @@ namespace FilmManagement.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("FirstName");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -87,6 +90,9 @@ namespace FilmManagement.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("FirstName");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -123,6 +129,9 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
@@ -156,6 +165,9 @@ namespace FilmManagement.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("FirstName");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -245,6 +257,9 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<Guid>("FilmId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
@@ -279,6 +294,9 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
@@ -312,6 +330,9 @@ namespace FilmManagement.Persistence.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnName("Description");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -329,30 +350,34 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("26d977c8-76f0-4877-a51d-2ac3c6d258fa"),
-                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1147),
+                            Id = new Guid("9cbac9f6-c50b-4067-869c-60dfaa5b14fa"),
+                            CreatedDate = new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3230),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
+                            IsActive = true,
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("d254df4f-a78d-483e-9235-d5167181ef99"),
-                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1155),
+                            Id = new Guid("f1126f56-e03f-498a-918f-a6e242364b2d"),
+                            CreatedDate = new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3239),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
+                            IsActive = true,
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("94a73562-f599-4942-bfab-275859a30b2b"),
-                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1157),
+                            Id = new Guid("190acda3-6d5f-4be6-90db-41ced64137bd"),
+                            CreatedDate = new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3242),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
+                            IsActive = true,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("9922be58-f8a9-4745-9bd2-524444ed282a"),
-                            CreatedDate = new DateTime(2024, 7, 23, 10, 0, 24, 935, DateTimeKind.Utc).AddTicks(1159),
+                            Id = new Guid("9da51501-57ed-4c38-b883-0633c4b72333"),
+                            CreatedDate = new DateTime(2024, 7, 25, 18, 13, 34, 100, DateTimeKind.Utc).AddTicks(3244),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
+                            IsActive = true,
                             Name = "Fantastik"
                         });
                 });
@@ -380,6 +405,9 @@ namespace FilmManagement.Persistence.Migrations
 
                     b.Property<Guid>("FimId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
