@@ -4,7 +4,7 @@ using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace FilmManagement.Application.Concretes
+namespace FilmManagement.Application.Concretes.Services
 {
     public class CustomerService : ICustomerService
     {

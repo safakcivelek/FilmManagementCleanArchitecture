@@ -1,15 +1,14 @@
-﻿
-using FilmManagement.Application.Abstracts.Repositories;
+﻿using FilmManagement.Application.Abstracts.Repositories;
 using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace FilmManagement.Application.Concretes
+namespace FilmManagement.Application.Concretes.Services
 {
-    public class CustomerFavoriteGenreService :ICustomerFavoriteGenreService
+    public class CustomerFavoriteGenreService : ICustomerFavoriteGenreService
     {
-        private readonly ICustomerFavoriteGenreRepository  _customerFavoriteGenreRepository;
+        private readonly ICustomerFavoriteGenreRepository _customerFavoriteGenreRepository;
         public CustomerFavoriteGenreService(ICustomerFavoriteGenreRepository customerFavoriteGenreRepository)
         {
             _customerFavoriteGenreRepository = customerFavoriteGenreRepository;
@@ -17,7 +16,7 @@ namespace FilmManagement.Application.Concretes
 
         public async Task<CustomerFavoriteGenre?> GetAsync(Expression<Func<CustomerFavoriteGenre, bool>> predicate, Func<IQueryable<CustomerFavoriteGenre>, IIncludableQueryable<CustomerFavoriteGenre, object>>? include = null, bool enableTracking = true)
         {
-            CustomerFavoriteGenre?  customerFavoriteGenre = await _customerFavoriteGenreRepository.GetAsync(predicate, include, enableTracking);
+            CustomerFavoriteGenre? customerFavoriteGenre = await _customerFavoriteGenreRepository.GetAsync(predicate, include, enableTracking);
             return customerFavoriteGenre;
         }
 
@@ -27,7 +26,7 @@ namespace FilmManagement.Application.Concretes
             return customerFavoriteGenreList;
         }
 
-        public async Task<CustomerFavoriteGenre> AddAsync(CustomerFavoriteGenre  customerFavoriteGenre)
+        public async Task<CustomerFavoriteGenre> AddAsync(CustomerFavoriteGenre customerFavoriteGenre)
         {
             CustomerFavoriteGenre addedCustomerFavoriteGenre = await _customerFavoriteGenreRepository.AddAsync(customerFavoriteGenre);
             return addedCustomerFavoriteGenre;

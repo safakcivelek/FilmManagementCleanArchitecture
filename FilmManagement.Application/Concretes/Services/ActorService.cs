@@ -4,7 +4,7 @@ using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace FilmManagement.Application.Concretes
+namespace FilmManagement.Application.Concretes.Services
 {
     public class ActorService : IActorService
     {
@@ -22,13 +22,13 @@ namespace FilmManagement.Application.Concretes
 
         public async Task<IList<Actor>> GetListAsync(Expression<Func<Actor, bool>>? predicate = null, Func<IQueryable<Actor>, IIncludableQueryable<Actor, object>>? include = null, bool enableTracking = true)
         {
-            IList<Actor> actorList= await _actorRepository.GetListAsync(predicate, include, enableTracking);
+            IList<Actor> actorList = await _actorRepository.GetListAsync(predicate, include, enableTracking);
             return actorList;
         }
 
         public async Task<Actor> AddAsync(Actor actor)
         {
-            Actor addedActor=await _actorRepository.AddAsync(actor);
+            Actor addedActor = await _actorRepository.AddAsync(actor);
             return addedActor;
         }
 
@@ -39,7 +39,7 @@ namespace FilmManagement.Application.Concretes
         }
         public async Task<Actor> DeleteAsync(Actor actor)
         {
-            Actor deletedActor =await _actorRepository.DeleteAsync(actor);
+            Actor deletedActor = await _actorRepository.DeleteAsync(actor);
             return deletedActor;
         }
     }
