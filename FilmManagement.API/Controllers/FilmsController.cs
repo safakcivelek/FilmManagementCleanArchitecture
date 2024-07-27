@@ -24,35 +24,35 @@ namespace FilmManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            GetByIdFilmQueryResponse response = await _mediator.Send(new GetByIdFilmQueryRequest { Id = id });
+            ApiResponse<GetByIdFilmResponseDto> response = await _mediator.Send(new GetByIdFilmQueryRequest { Id = id });
             return Ok(response);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] GetListFilmQueryRequest request)
         {
-            GetListResponse<GetListFilmDto> response = await _mediator.Send(request);
+            ApiListResponse<GetListFilmResponseDto> response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateFilmCommandRequest request)
         {
-            CreateFilmCommandResponse response = await _mediator.Send(request);
+            ApiResponse<CreateFilmResponseDto> response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateFilmCommandRequest request)
         {
-            UpdateFilmCommandResponse response = await _mediator.Send(request);
+            ApiResponse<UpdateFilmResponseDto> response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            DeleteFilmCommandResponse response = await _mediator.Send(new DeleteFilmCommandRequest { Id = id});
+            ApiResponse<DeleteFilmResponseDto> response = await _mediator.Send(new DeleteFilmCommandRequest { Id = id});
             return Ok(response);
         }
     }

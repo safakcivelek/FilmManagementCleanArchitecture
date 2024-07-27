@@ -12,32 +12,23 @@ namespace FilmManagement.Application.Features.Films.Profiles
     public class MappingProfiles : Profile
     {
         public MappingProfiles()
-        {
+        {   
             //GetList
-            CreateMap<IList<Film>, GetListResponse<GetListFilmDto>>()
-                .ForMember(dest => dest.Items, opt => opt.MapFrom(src =>
-                    src.Select(x => new GetListFilmDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Year = x.Year,
-                        Price = x.Price,
-                        Description = x.Description
-                    }).ToList()));
+            CreateMap<Film, GetListFilmResponseDto>().ReverseMap();
 
             //GetById
-            CreateMap<Film, GetByIdFilmQueryResponse>().ReverseMap();
+            CreateMap<Film, GetByIdFilmResponseDto>().ReverseMap(); 
 
             //Add
-            CreateMap<CreateFilmCommandRequest, Film>();
-            CreateMap<Film, CreateFilmCommandResponse>();
+            CreateMap<CreateFilmCommandRequest, Film>().ReverseMap();
+            CreateMap<Film, CreateFilmResponseDto>().ReverseMap();
 
             //Update
             CreateMap<UpdateFilmCommandRequest, Film>().ReverseMap();
-            CreateMap<Film, UpdateFilmCommandResponse>().ReverseMap();
+            CreateMap<Film, UpdateFilmResponseDto>().ReverseMap(); 
 
             //Delete
-            CreateMap<Film, DeleteFilmCommandResponse>().ReverseMap();
+            CreateMap<Film, DeleteFilmResponseDto>().ReverseMap();
 
         }
     }

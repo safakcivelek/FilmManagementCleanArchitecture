@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Application.Common.Responses;
+using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Domain.Entities;
 using MediatR;
 
 namespace FilmManagement.Application.Features.Films.Commands.Create
 {
-    public class CreateFilmCommandHandler : IRequestHandler<CreateFilmCommandRequest, CreateFilmCommandResponse>
+    public class CreateFilmCommandHandler : IRequestHandler<CreateFilmCommandRequest, ApiResponse<CreateFilmResponseDto>>
     {
         private readonly IFilmRepository _filmRepository;
         private readonly IMapper _mapper;
@@ -16,13 +18,13 @@ namespace FilmManagement.Application.Features.Films.Commands.Create
             _mapper = mapper;
         }
 
-        public async Task<CreateFilmCommandResponse> Handle(CreateFilmCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<CreateFilmResponseDto>> Handle(CreateFilmCommandRequest request, CancellationToken cancellationToken)
         {
             Film film = _mapper.Map<Film>(request);
             await _filmRepository.AddAsync(film);
 
-            CreateFilmCommandResponse response = _mapper.Map<CreateFilmCommandResponse>(film);
-            return response;
+            CreateFilmResponseDto responseDto = _mapper.Map<CreateFilmResponseDto>(film);
+            return new ApiResponse<CreateFilmResponseDto>(responseDto, "Ekleme işlemi başarılı.");
         }
     }
 }

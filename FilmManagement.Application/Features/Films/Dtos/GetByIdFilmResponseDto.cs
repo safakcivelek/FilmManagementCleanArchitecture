@@ -1,6 +1,6 @@
-﻿namespace FilmManagement.Application.Features.Films.Queries.GetById
+﻿namespace FilmManagement.Application.Features.Films.Dtos
 {
-    public class GetByIdFilmQueryResponse
+    public class GetByIdFilmResponseDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace FilmManagement.Application.Features.Films.Queries.GetList
 {
-    public class GetListFilmQueryHandler : IRequestHandler<GetListFilmQueryRequest, GetListResponse<GetListFilmDto>>
+    public class GetListFilmQueryHandler : IRequestHandler<GetListFilmQueryRequest, ApiListResponse<GetListFilmResponseDto>>
     {
         private readonly IFilmRepository _filmRepository;
         private readonly IMapper _mapper;
@@ -18,13 +18,13 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListFilmDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ApiListResponse<GetListFilmResponseDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
         {
             // enableTracking : false ?
             IList<Film> films = await _filmRepository.GetListAsync();
-
-            GetListResponse<GetListFilmDto> response = _mapper.Map<GetListResponse<GetListFilmDto>>(films);
-            return response;
+            
+            IList<GetListFilmResponseDto> filmDtos = _mapper.Map<IList<GetListFilmResponseDto>>(films);
+            return new ApiListResponse<GetListFilmResponseDto>(filmDtos, "Filmler başarıyla getirildi.");          
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace FilmManagement.Application.Features.Films.Dtos
 {
-    public class GetListFilmDto
+    public class GetListFilmResponseDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Application.Common.Responses;
+using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Domain.Entities;
 using MediatR;
 
 namespace FilmManagement.Application.Features.Films.Commands.Update
 {
-    public class UpdateFilmCommandHandler : IRequestHandler<UpdateFilmCommandRequest, UpdateFilmCommandResponse>
+    public class UpdateFilmCommandHandler : IRequestHandler<UpdateFilmCommandRequest, ApiResponse<UpdateFilmResponseDto>>
     {
         private readonly IFilmRepository _filmRepository;
         private readonly IMapper _mapper;
@@ -16,7 +18,7 @@ namespace FilmManagement.Application.Features.Films.Commands.Update
             _mapper = mapper;
         }
 
-        public async Task<UpdateFilmCommandResponse> Handle(UpdateFilmCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<UpdateFilmResponseDto>> Handle(UpdateFilmCommandRequest request, CancellationToken cancellationToken)
         {
             Film? film = await _filmRepository.GetAsync(predicate: f => f.Id == request.Id);
 
@@ -24,8 +26,11 @@ namespace FilmManagement.Application.Features.Films.Commands.Update
 
             await _filmRepository.UpdateAsync(film!);
 
-            UpdateFilmCommandResponse response = _mapper.Map<UpdateFilmCommandResponse>(film);
-            return response;
+            //ApiResponse<UpdateFilmResponseDto> response = _mapper.Map<ApiResponse<UpdateFilmResponseDto>>(film);
+            //return response;
+
+            UpdateFilmResponseDto filmDto = _mapper.Map<UpdateFilmResponseDto>(film);
+            return new ApiResponse<UpdateFilmResponseDto>(filmDto, "Film başarıyla güncellendi.");
         }
     }
 }

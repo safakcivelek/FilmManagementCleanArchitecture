@@ -1,11 +1,14 @@
 using FilmManagement.Application;
 using FilmManagement.Persistence;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+//AddNewtonsoftJson ==> [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] attributesini kullanan alanlarda etkili olmasýný saðlar.
+builder.Services.AddControllers().AddNewtonsoftJson();
+
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();
 
