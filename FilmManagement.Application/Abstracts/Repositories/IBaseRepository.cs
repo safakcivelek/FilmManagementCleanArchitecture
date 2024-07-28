@@ -21,8 +21,8 @@ namespace FilmManagement.Application.Abstracts.Repositories
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<TEntity> DeleteAsync(TEntity entity, bool forceDelete = false);
 
-        Task<ICollection<TEntity>> AddRangeAsync(ICollection<TEntity> entities);
-        Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities);
-        Task<ICollection<TEntity>> DeleteRangeAsync(ICollection<TEntity> entities, bool forceDelete = false);
+        Task<IList<TEntity>> AddRangeAsync(IList<TEntity> entities);
+        Task<IList<TEntity>> UpdateRangeAsync(IList<TEntity> entities);
+        Task<IList<TEntity>> DeleteRangeAsync(IList<TEntity> entities, bool forceDelete = false);
     }
 }

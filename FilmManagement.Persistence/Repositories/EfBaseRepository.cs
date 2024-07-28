@@ -49,7 +49,7 @@ namespace FilmManagement.Persistence.Repositories
             return entity;
         }
 
-        public async Task<ICollection<TEntity>> AddRangeAsync(ICollection<TEntity> entities)
+        public async Task<IList<TEntity>> AddRangeAsync(IList<TEntity> entities)
         {
             foreach (TEntity entity in entities)
                 entity.CreatedDate = DateTime.UtcNow;
@@ -67,7 +67,7 @@ namespace FilmManagement.Persistence.Repositories
             return entity;
         }
 
-        public async Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities)
+        public async Task<IList<TEntity>> UpdateRangeAsync(IList<TEntity> entities)
         {
             foreach (TEntity entity in entities)
                 entity.UpdatedDate = DateTime.UtcNow;
@@ -94,7 +94,7 @@ namespace FilmManagement.Persistence.Repositories
             return null;
         }
 
-        public async Task<ICollection<TEntity>> DeleteRangeAsync(ICollection<TEntity> entities, bool forceDelete = false)
+        public async Task<IList<TEntity>> DeleteRangeAsync(IList<TEntity> entities, bool forceDelete = false)
         {
             if (forceDelete == false)
             {
