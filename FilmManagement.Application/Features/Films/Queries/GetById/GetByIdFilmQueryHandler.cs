@@ -21,7 +21,10 @@ namespace FilmManagement.Application.Features.Films.Queries.GetById
         public async Task<ApiResponse<GetByIdFilmResponseDto>> Handle(GetByIdFilmQueryRequest request, CancellationToken cancellationToken)
         {
             //enabletracking ?          
-            ApiResponse<Film?> getFilmResponse = await _filmService.GetAsync(f => f.Id == request.Id);
+            ApiResponse<Film?> getFilmResponse = await _filmService.GetAsync(
+                predicate: f => f.Id == request.Id,
+                withDeleted:true);
+            // Silinen ürünü getirmek istersem nasıl hata kontrolü yaparım ? data varmı yokmu kontrolu businessRules
 
             GetByIdFilmResponseDto responseDto = _mapper.Map<GetByIdFilmResponseDto>(getFilmResponse.Data);
             return new ApiResponse<GetByIdFilmResponseDto>(responseDto, getFilmResponse.Message);

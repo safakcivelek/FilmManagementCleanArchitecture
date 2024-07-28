@@ -10,12 +10,16 @@ namespace FilmManagement.Application.Abstracts.Repositories
         Task<TEntity?> GetAsync(
             Expression<Func<TEntity, bool>> predicate,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-            bool enableTracking = true);
+            bool enableTracking = true,
+            bool withDeleted = false
+            );
 
         Task<IList<TEntity>> GetListAsync(
             Expression<Func<TEntity, bool>>? predicate = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-            bool enableTracking = true);
+            bool enableTracking = true,
+            bool withDeleted = false
+            );
 
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);

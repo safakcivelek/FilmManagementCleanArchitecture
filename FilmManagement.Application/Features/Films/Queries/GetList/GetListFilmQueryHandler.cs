@@ -21,7 +21,9 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
         public async Task<ApiListResponse<GetListFilmResponseDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
         {
             // enableTracking : false ?          
-            ApiListResponse<Film> getFilmsResponse  = await _filmService.GetListAsync();
+            ApiListResponse<Film> getFilmsResponse = await _filmService.GetListAsync(                             
+                withDeleted:false
+                ); 
            
             IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);
             return new ApiListResponse<GetListFilmResponseDto>(responseDto, getFilmsResponse.Message);          

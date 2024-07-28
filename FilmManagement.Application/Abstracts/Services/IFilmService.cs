@@ -10,12 +10,16 @@ namespace FilmManagement.Application.Abstracts.Services
         Task<ApiResponse<Film?>> GetAsync(
         Expression<Func<Film, bool>> predicate,
         Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
         Task<ApiListResponse<Film>> GetListAsync(
         Expression<Func<Film, bool>>? predicate = null,
         Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
         Task<ApiResponse<Film>> AddAsync(Film film);
 

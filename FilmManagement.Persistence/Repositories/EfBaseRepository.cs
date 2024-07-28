@@ -18,22 +18,30 @@ namespace FilmManagement.Persistence.Repositories
         }
 
         public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-            bool enableTracking = true)
+            bool enableTracking = true,
+            bool withDeleted = false
+            )
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
+            if (withDeleted)
+                queryable = queryable.Where(e => e.IsActive);
             if (include != null)
                 queryable = include(queryable);
             return await queryable.FirstOrDefaultAsync(predicate);
         }
 
         public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-            bool enableTracking = true)
+            bool enableTracking = true,
+            bool withDeleted = false
+            )
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
+            if (withDeleted)
+                queryable = queryable.Where(e => e.IsActive);
             if (include != null)
                 queryable = include(queryable);
             if (predicate != null)

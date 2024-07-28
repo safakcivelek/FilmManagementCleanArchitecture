@@ -16,15 +16,15 @@ namespace FilmManagement.Application.Concretes.Services
             _filmRepository = filmRepository;
         }
 
-        public async Task<ApiResponse<Film>?> GetAsync(Expression<Func<Film, bool>> predicate, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true)
+        public async Task<ApiResponse<Film>?> GetAsync(Expression<Func<Film, bool>> predicate, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
-            Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking);
+            Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking,withDeleted);
             return new ApiResponse<Film>(film, "Film başarıyla getirildi.");
         }
 
-        public async Task<ApiListResponse<Film>> GetListAsync(Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true)
+        public async Task<ApiListResponse<Film>> GetListAsync(Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
-            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking);
+            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking,withDeleted);
             return new ApiListResponse<Film>(filmList, "Filmler başarıyla listelendi.");
         }
 
