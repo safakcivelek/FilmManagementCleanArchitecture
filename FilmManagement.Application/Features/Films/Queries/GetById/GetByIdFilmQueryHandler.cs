@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Application.Common.Responses;
 using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Domain.Entities;
@@ -9,25 +9,22 @@ namespace FilmManagement.Application.Features.Films.Queries.GetById
 {
     public class GetByIdFilmQueryHandler : IRequestHandler<GetByIdFilmQueryRequest, ApiResponse<GetByIdFilmResponseDto>>
     {
-        private readonly IFilmRepository _filmRepository;
+        private readonly IFilmService _filmService;
         private readonly IMapper _mapper;
 
-        public GetByIdFilmQueryHandler(IFilmRepository filmRepository, IMapper mapper)
+        public GetByIdFilmQueryHandler(IMapper mapper, IFilmService filmService)
         {
-            _filmRepository = filmRepository;
             _mapper = mapper;
+            _filmService = filmService;
         }
 
         public async Task<ApiResponse<GetByIdFilmResponseDto>> Handle(GetByIdFilmQueryRequest request, CancellationToken cancellationToken)
         {
-            //enabletracking ?
-            Film? film = await _filmRepository.GetAsync(f => f.Id == request.Id);
+            //enabletracking ?          
+            ApiResponse<Film?> getFilmResponse = await _filmService.GetAsync(f => f.Id == request.Id);
 
-            //ApiResponse<GetByIdFilmResponseDto> response = _mapper.Map<ApiResponse<GetByIdFilmResponseDto>>(film);
-            //return response;
-
-            GetByIdFilmResponseDto filmDto = _mapper.Map<GetByIdFilmResponseDto>(film);
-            return new ApiResponse<GetByIdFilmResponseDto>(filmDto, "Film başarıyla getirildi.");
+            GetByIdFilmResponseDto responseDto = _mapper.Map<GetByIdFilmResponseDto>(getFilmResponse.Data);
+            return new ApiResponse<GetByIdFilmResponseDto>(responseDto, getFilmResponse.Message);
         }
     }
 }

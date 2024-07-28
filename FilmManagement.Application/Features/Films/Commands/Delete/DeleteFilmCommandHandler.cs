@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Application.Common.Responses;
 using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Domain.Entities;
@@ -9,26 +9,24 @@ namespace FilmManagement.Application.Features.Films.Commands.Delete
 {
     public class DeleteFilmCommandHandler : IRequestHandler<DeleteFilmCommandRequest, ApiResponse<DeleteFilmResponseDto>>
     {
-        private readonly IFilmRepository _filmRepository;
+        private readonly IFilmService _filmService;
         private readonly IMapper _mapper;
 
-        public DeleteFilmCommandHandler(IFilmRepository filmRepository, IMapper mapper)
+        public DeleteFilmCommandHandler(IMapper mapper, IFilmService filmService)
         {
-            _filmRepository = filmRepository;
             _mapper = mapper;
+            _filmService = filmService;
         }
 
         public async Task<ApiResponse<DeleteFilmResponseDto>> Handle(DeleteFilmCommandRequest request, CancellationToken cancellationToken)
-        {
-            Film film = await _filmRepository.GetAsync(predicate: f => f.Id == request.Id);
+        {           
+            ApiResponse<Film?> getFilmResponse = await _filmService.GetAsync(f => f.Id == request.Id);
 
-            await _filmRepository.DeleteAsync(film!,forceDelete: false);
+            var film = _mapper.Map(request, getFilmResponse.Data);
+            ApiResponse<Film> deletedFilm = await _filmService.DeleteAsync(film);
 
-            //ApiResponse<DeleteFilmResponseDto> response = _mapper.Map<ApiResponse<DeleteFilmResponseDto>>(film);
-            //return response;
-
-            DeleteFilmResponseDto filmDto = _mapper.Map<DeleteFilmResponseDto>(film);
-            return new ApiResponse<DeleteFilmResponseDto>(filmDto, "Film başarıyla silindi.");
+            DeleteFilmResponseDto responseDto = _mapper.Map<DeleteFilmResponseDto>(film);
+            return new ApiResponse<DeleteFilmResponseDto>(responseDto, deletedFilm.Message);
         }
     }
 }

@@ -12,12 +12,13 @@ namespace FilmManagement.Application.Features.Films.Profiles
     public class MappingProfiles : Profile
     {
         public MappingProfiles()
-        {   
+        {
             //GetList
             CreateMap<Film, GetListFilmResponseDto>().ReverseMap();
 
             //GetById
             CreateMap<Film, GetByIdFilmResponseDto>().ReverseMap(); 
+            
 
             //Add
             CreateMap<CreateFilmCommandRequest, Film>().ReverseMap();
@@ -25,11 +26,11 @@ namespace FilmManagement.Application.Features.Films.Profiles
 
             //Update
             CreateMap<UpdateFilmCommandRequest, Film>().ReverseMap();
-            CreateMap<Film, UpdateFilmResponseDto>().ReverseMap(); 
+            CreateMap<Film, UpdateFilmResponseDto>().ReverseMap();
 
             //Delete
+            CreateMap<DeleteFilmCommandRequest, Film>().ReverseMap();
             CreateMap<Film, DeleteFilmResponseDto>().ReverseMap();
-
         }
     }
 }
