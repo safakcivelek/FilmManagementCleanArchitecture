@@ -1,4 +1,5 @@
 ﻿using FilmManagement.Application.Abstracts.Services;
+using FilmManagement.Application.Exceptions.Types;
 using FilmManagement.Application.Features.Films.Constants;
 using FilmManagement.Application.Rules;
 
@@ -17,7 +18,7 @@ namespace FilmManagement.Application.Features.Films.Rules
         {
             bool doesExists = await _filmService.AnyAsync(predicate: f => f.Name == filmName, enableTracking: false);
             if (doesExists)
-                throw new Exception(FilmBusinessMessages.FilmNameAlreadyExists);
+                throw new BusinessException(FilmBusinessMessages.FilmNameAlreadyExists);
         }
 
         // Film güncellenirken var olması gerekir
@@ -25,7 +26,7 @@ namespace FilmManagement.Application.Features.Films.Rules
         {
             bool doesExists = await _filmService.AnyAsync(f => f.Id == id);
             if (!doesExists)          
-                throw new Exception(FilmBusinessMessages.FilmNotFound);           
+                throw new NotFoundException(FilmBusinessMessages.FilmNotFound);      
         }        
 
         // Film silinirken var olması gerekir
@@ -33,7 +34,7 @@ namespace FilmManagement.Application.Features.Films.Rules
         {
             bool doesExists = await _filmService.AnyAsync(f => f.Id == id);
             if (!doesExists)
-                throw new Exception(FilmBusinessMessages.FilmNotFound);
+                throw new NotFoundException(FilmBusinessMessages.FilmNotFound);
         }
     }
 }
