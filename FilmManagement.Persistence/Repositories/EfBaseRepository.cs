@@ -40,8 +40,10 @@ namespace FilmManagement.Persistence.Repositories
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
-            if (withDeleted)
+            if (!withDeleted)
                 queryable = queryable.Where(e => e.IsActive);
+            else
+                queryable = queryable.IgnoreQueryFilters(); 
             if (include != null)
                 queryable = include(queryable);
             if (predicate != null)
