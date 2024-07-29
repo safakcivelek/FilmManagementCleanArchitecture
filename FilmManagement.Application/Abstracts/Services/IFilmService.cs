@@ -21,6 +21,12 @@ namespace FilmManagement.Application.Abstracts.Services
         bool withDeleted = false
         );
 
+        Task<bool> AnyAsync(
+        Expression<Func<Film, bool>>? predicate = null,       
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
+
         Task<ApiResponse<Film>> AddAsync(Film film);
 
         Task<ApiResponse<Film>> UpdateAsync(Film film);

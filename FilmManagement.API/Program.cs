@@ -1,4 +1,5 @@
 using FilmManagement.Application;
+using FilmManagement.Application.Features.Films.Rules;
 using FilmManagement.Persistence;
 using Newtonsoft.Json;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //AddNewtonsoftJson ==> [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] attributesini kullanan alanlarda etkili olmasýný saðlar.
 builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddScoped<FilmBusinessRules>(); // burayý registera geçir.
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();

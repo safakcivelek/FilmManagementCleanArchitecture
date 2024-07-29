@@ -18,14 +18,24 @@ namespace FilmManagement.Application.Concretes.Services
 
         public async Task<ApiResponse<Film>?> GetAsync(Expression<Func<Film, bool>> predicate, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
-            Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking,withDeleted);
+            Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking, withDeleted);
+            if (film == null)
+                return new ApiResponse<Film>(film, "Film bulunamadı.",404);
             return new ApiResponse<Film>(film, "Film başarıyla getirildi.");
         }
 
         public async Task<ApiListResponse<Film>> GetListAsync(Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
-            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking,withDeleted);
+            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
+            if (filmList.Count == 0)
+                return new ApiListResponse<Film>(filmList, "Hiç film bulunamadı.", 404);
             return new ApiListResponse<Film>(filmList, "Filmler başarıyla listelendi.");
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<Film, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
+        {
+            bool filmExists = await _filmRepository.AnyAsync(predicate, enableTracking, withDeleted);
+            return filmExists;
         }
 
         public async Task<ApiResponse<Film>> AddAsync(Film film)
@@ -42,12 +52,12 @@ namespace FilmManagement.Application.Concretes.Services
         public async Task<ApiResponse<Film>> DeleteAsync(Film film)
         {
             Film deletedFilm = await _filmRepository.DeleteAsync(film);
-            return new ApiResponse<Film>(deletedFilm,"Film başarıyla silindi.");
+            return new ApiResponse<Film>(deletedFilm, "Film başarıyla silindi.");
         }
 
         public async Task<ApiListResponse<Film>> AddRangeAsync(IList<Film> films)
         {
-            IList<Film> addedFilms =await _filmRepository.AddRangeAsync(films);
+            IList<Film> addedFilms = await _filmRepository.AddRangeAsync(films);
             return new ApiListResponse<Film>(addedFilms, "Filmler başarıyla eklendi.");
         }
 

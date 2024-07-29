@@ -21,6 +21,12 @@ namespace FilmManagement.Application.Abstracts.Repositories
             bool withDeleted = false
             );
 
+        Task<bool> AnyAsync(
+            Expression<Func<TEntity, bool>>? predicate = null,
+            bool enableTracking = true,
+            bool withDeleted = false
+            );
+
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<TEntity> DeleteAsync(TEntity entity, bool forceDelete = false);

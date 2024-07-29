@@ -49,6 +49,18 @@ namespace FilmManagement.Persistence.Repositories
             return await queryable.ToListAsync();
         }
 
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
+        {
+            IQueryable<TEntity> queryable = _context.Set<TEntity>();
+            if (!enableTracking)
+                queryable = queryable.AsNoTracking();
+            if (withDeleted)
+                queryable = queryable.Where(e => e.IsActive);
+            if (predicate != null)
+                queryable = queryable.Where(predicate);
+            return await queryable.AnyAsync();
+        }
+
         public async Task<TEntity> AddAsync(TEntity entity)
         {
             entity.CreatedDate = DateTime.UtcNow;
@@ -118,6 +130,6 @@ namespace FilmManagement.Persistence.Repositories
 
             await _context.SaveChangesAsync();
             return null;
-        }
+        }      
     }
 }
