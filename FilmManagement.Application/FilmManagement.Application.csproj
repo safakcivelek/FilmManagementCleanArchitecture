@@ -24,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Actors\" />
     <Folder Include="Features\Customers\" />
     <Folder Include="Features\CustomerFavoriteGenres\" />
-    <Folder Include="Features\Directors\" />
     <Folder Include="Features\FilmActors\" />
     <Folder Include="Features\FilmGenres\" />
     <Folder Include="Features\Genres\" />

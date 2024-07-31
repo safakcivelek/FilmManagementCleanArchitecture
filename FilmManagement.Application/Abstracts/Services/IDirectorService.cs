@@ -1,4 +1,5 @@
-﻿using FilmManagement.Domain.Entities;
+﻿using FilmManagement.Application.Common.Responses;
+using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -6,20 +7,34 @@ namespace FilmManagement.Application.Abstracts.Services
 {
     public interface IDirectorService
     {
-        Task<Director?> GetAsync(
+        Task<ApiResponse<Director?>> GetAsync(
         Expression<Func<Director, bool>> predicate,
         Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<IList<Director>> GetListAsync(
+        Task<ApiListResponse<Director>> GetListAsync(
         Expression<Func<Director, bool>>? predicate = null,
         Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<Director> AddAsync(Director director);
+        Task<bool> AnyAsync(
+        Expression<Func<Director, bool>>? predicate = null,
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<Director> UpdateAsync(Director director);
+        Task<ApiResponse<Director>> AddAsync(Director director);
 
-        Task<Director> DeleteAsync(Director director);
+        Task<ApiResponse<Director>> UpdateAsync(Director director);
+
+        Task<ApiResponse<Director>> DeleteAsync(Director director);
+
+        Task<ApiListResponse<Director>> AddRangeAsync(IList<Director> directors);
+        Task<ApiListResponse<Director>> UpdateRangeAsync(IList<Director> directors);
+        Task<ApiListResponse<Director>> DeleteRangeAsync(IList<Director> directors);
     }
 }

@@ -21,6 +21,7 @@ namespace FilmManagement.Application.Concretes.Services
         {
             Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking, withDeleted);
             if (film == null)
+                //Get metodu için, kaynak bulunamadığında 404 status kodu ile birlikte anlamlı bir hata mesajı döndürmek uygun bir yaklaşımdır. Bu durum, özellikle belirli bir kaynağı ararken (örneğin, belirli bir ID'ye sahip bir film) yaygındır ve kullanıcıya doğru bilgi vermek açısından önemlidir.
                 return new ApiResponse<Film>(film,FilmServiceMessages.FilmNotFound,404);
             return new ApiResponse<Film>(film,FilmServiceMessages.FilmRetrievedSuccessfully);
         }
@@ -29,7 +30,8 @@ namespace FilmManagement.Application.Concretes.Services
         {
             IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
             if (filmList.Count == 0)
-                return new ApiListResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 404);
+                //Bu metot içinde hiç film bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç film bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir film bulunamadığında) kullanılır.
+                return new ApiListResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 404); // Düzenle 404/200 ?
             return new ApiListResponse<Film>(filmList, FilmServiceMessages.FilmsListedSuccessfully);
         }
 
@@ -72,6 +74,6 @@ namespace FilmManagement.Application.Concretes.Services
         {
             IList<Film> deletedFilms = await _filmRepository.DeleteRangeAsync(films);
             return new ApiListResponse<Film>(deletedFilms, FilmServiceMessages.FilmsDeletedSuccessfully);
-        }
+        }      
     }
 }

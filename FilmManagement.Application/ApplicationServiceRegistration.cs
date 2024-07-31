@@ -6,6 +6,7 @@ using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FilmManagement.Application.Pipelines.Validation;
+using DirectorManagement.Application.Concretes.Services;
 
 
 
