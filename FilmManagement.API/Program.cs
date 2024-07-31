@@ -1,6 +1,9 @@
 using FilmManagement.Application;
 using FilmManagement.Application.Exceptions.Extensions;
+using FilmManagement.Application.Pipelines.Validation;
 using FilmManagement.Persistence;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 
@@ -12,6 +15,13 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();
+
+// Default exception'ý devre dýþý býrakýr.
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

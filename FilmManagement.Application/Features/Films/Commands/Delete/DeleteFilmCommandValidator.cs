@@ -1,7 +1,14 @@
-﻿namespace FilmManagement.Application.Features.Films.Commands.Delete
+﻿using FluentValidation;
+
+namespace FilmManagement.Application.Features.Films.Commands.Delete
 {
-    public class DeleteFilmCommandValidator
+    public class DeleteFilmCommandValidator :AbstractValidator<DeleteFilmCommandRequest>
     {
-        //validasyonlar eklenecek.
+        public DeleteFilmCommandValidator()
+        {
+            RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Film ID boş olamaz.")
+            .Must(id => Guid.TryParse(id.ToString(), out _)).WithMessage("Geçerli bir GUID formatında olmalıdır.");
+        }
     }
 }

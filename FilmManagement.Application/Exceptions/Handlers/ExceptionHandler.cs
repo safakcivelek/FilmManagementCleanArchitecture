@@ -9,11 +9,13 @@ namespace FilmManagement.Application.Exceptions.Handlers
             {
                 BusinessException businessException => HandleException(businessException),
                 NotFoundException notFoundException => HandleException(notFoundException),
+                ValidationException validationException => HandleException(validationException),
                 _ => HandleException(exception)
             };
 
         protected abstract Task HandleException(BusinessException businessException);
         protected abstract Task HandleException(NotFoundException notFoundException);
+        protected abstract Task HandleException(ValidationException validationException);
         protected abstract Task HandleException(Exception exception);
     }
 }

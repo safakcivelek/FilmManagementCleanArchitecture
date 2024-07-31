@@ -9,6 +9,7 @@ namespace FilmManagement.Application.Exceptions.Handlers
     {
         public HttpResponse Response
         {
+            //Bu yapı, Response özelliğinin null olmasını engelleyerek güvenli bir kullanım sağlar.
             get => _response ?? throw new ArgumentNullException(nameof(_response));
             set => _response = value;
         }
@@ -26,6 +27,13 @@ namespace FilmManagement.Application.Exceptions.Handlers
         {
             Response.StatusCode = StatusCodes.Status404NotFound;
             string details = new NotFoundProblemDetails(notFoundException.Message).AsJson();
+            return Response.WriteAsync(details);
+        }
+
+        protected override Task HandleException(ValidationException validationException)
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            string details = new ValidationProblemDetails(validationException.Errors).AsJson();
             return Response.WriteAsync(details);
         }
 

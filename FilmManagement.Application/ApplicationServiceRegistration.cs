@@ -1,10 +1,13 @@
-﻿
-using FilmManagement.Application.Abstracts.Repositories;
-using FilmManagement.Application.Abstracts.Services;
+﻿using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Application.Concretes.Services;
 using FilmManagement.Application.Rules;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FilmManagement.Application.Pipelines.Validation;
+
+
 
 namespace FilmManagement.Application
 {
@@ -17,9 +20,17 @@ namespace FilmManagement.Application
             services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));                 
             });
 
             services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddFluentValidation()
+                .AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+            
 
             services.AddScoped<IActorService, ActorService>();
             services.AddScoped<ICustomerService, CustomerService>();
