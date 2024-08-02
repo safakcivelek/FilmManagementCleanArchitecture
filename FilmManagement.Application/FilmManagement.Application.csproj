@@ -28,7 +28,6 @@
     <Folder Include="Features\CustomerFavoriteGenres\" />
     <Folder Include="Features\FilmActors\" />
     <Folder Include="Features\FilmGenres\" />
-    <Folder Include="Features\Genres\" />
     <Folder Include="Features\Purchases\" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using FilmManagement.Application.Common.Responses;
 using FilmManagement.Application.Features.Films.Dtos;
+using FilmManagement.Domain.Entities;
 using MediatR;
 
 namespace FilmManagement.Application.Features.Films.Commands.Create
@@ -12,5 +13,9 @@ namespace FilmManagement.Application.Features.Films.Commands.Create
         public string? Description { get; set; }
 
         public Guid DirectorId { get; set; }
+
+        public ICollection<Guid> ActorIds { get; set; }
+        public ICollection<Guid> GenreIds { get; set; }
+
     }
 }

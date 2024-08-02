@@ -19,8 +19,16 @@ namespace FilmManagement.Application.Features.Films.Commands.Create
             RuleFor(x => x.Description)
                 .MaximumLength(1000).WithMessage("Açıklama en fazla 1000 karakter olabilir.");
 
-            RuleFor(x => x.DirectorId)
+            RuleFor(f => f.DirectorId)
                 .NotEmpty().WithMessage("Yönetmen ID boş olamaz.");
+
+            RuleFor(f => f.GenreIds)
+                .Must(g => g != null && g.Any()).WithMessage("En az bir film türü seçilmelidir.") // Null olamaz!
+                .ForEach(g => g.NotEmpty().WithMessage("Oyuncu ID boş olamaz.")); // örneğin, boş bir string ("") veya sıfır değeri gibi olamaz!
+
+            RuleFor(x => x.ActorIds)
+                .Must(a => a != null && a.Any()).WithMessage("En az bir oyuncu seçilmelidir.")
+                .ForEach(a => a.NotEmpty().WithMessage("Oyuncu ID boş olamaz."));          
         }
     }
 }
