@@ -10,8 +10,8 @@
         public Guid DirectorId { get; set; }
         
         public Director? Director { get; set; }
-        public ICollection<FilmGenre?> FilmGenres { get; set; }
-        public ICollection<FilmActor?> FilmActors { get; set; }
-        public ICollection<Purchase?> Purchases { get; set; }
+        public ICollection<FilmGenre>? FilmGenres { get; set; }
+        public ICollection<FilmActor>? FilmActors { get; set; }
+        public ICollection<Purchase>? Purchases { get; set; }
     }
 }
