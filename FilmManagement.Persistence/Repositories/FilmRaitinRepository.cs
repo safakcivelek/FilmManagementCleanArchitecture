@@ -4,9 +4,9 @@ using FilmManagement.Persistence.Contexts;
 
 namespace FilmManagement.Persistence.Repositories
 {
-    public class CustomerRepository : EfBaseRepository<Customer, Guid, BaseDbContext>, ICustomerRepository
+    public class FilmRatingRepository : EfBaseRepository<FilmRating, Guid, BaseDbContext>, IFilmRatingRepository
     {
-        public CustomerRepository(BaseDbContext context) : base(context)
+        public FilmRatingRepository(BaseDbContext context) : base(context)
         {
         }
     }

@@ -4,6 +4,7 @@ using FilmManagement.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmManagement.Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240811195115_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,32 +314,32 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c3a5b8c0-dd7a-4a63-962f-ab9b33fe14ed"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 54, 21, 350, DateTimeKind.Utc).AddTicks(3741),
+                            Id = new Guid("6850f349-a21e-4c9d-9c2d-36ed68c228fa"),
+                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(768),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
                             IsActive = true,
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("630d44fd-b1fd-4eb9-9fd9-b1fed0f14ebc"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 54, 21, 350, DateTimeKind.Utc).AddTicks(3749),
+                            Id = new Guid("f740f912-714e-4cc6-aefb-57c92567bd58"),
+                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(776),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
                             IsActive = true,
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("36a96203-da6d-46a2-a914-9c7459ddebbc"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 54, 21, 350, DateTimeKind.Utc).AddTicks(3751),
+                            Id = new Guid("e4c7ae8b-c64d-44d3-943a-92d3bf01b8bc"),
+                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(778),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
                             IsActive = true,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("a70980fa-c6c1-4663-af87-24b095f670f3"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 54, 21, 350, DateTimeKind.Utc).AddTicks(3753),
+                            Id = new Guid("ccc8b3cd-7652-463b-bf63-cbe9090d4610"),
+                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(800),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
                             IsActive = true,
                             Name = "Fantastik"
@@ -654,7 +657,7 @@ namespace FilmManagement.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("FilmManagement.Domain.Entities.User", "User")
-                        .WithMany("FilmRatings")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -762,8 +765,6 @@ namespace FilmManagement.Persistence.Migrations
 
             modelBuilder.Entity("FilmManagement.Domain.Entities.User", b =>
                 {
-                    b.Navigation("FilmRatings");
-
                     b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618

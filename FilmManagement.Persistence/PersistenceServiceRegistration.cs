@@ -14,15 +14,13 @@ namespace FilmManagement.Persistence
             services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("FilmManagementConnectionString")));
 
             services.AddScoped<IActorRepository, ActorRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<ICustomerFavoriteGenreRepository, CustomerFavoriteGenreRepository>();
             services.AddScoped<IDirectorRepository, DirectorRepository>();
             services.AddScoped<IFilmRepository, FilmRepository>();
             services.AddScoped<IFilmActorRepository, FilmActorRepository>();
             services.AddScoped<IFilmGenreRepository, FilmGenreRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
-
+            services.AddScoped<IFilmRatingRepository, FilmRatingRepository>();
             return services;
         }
     }

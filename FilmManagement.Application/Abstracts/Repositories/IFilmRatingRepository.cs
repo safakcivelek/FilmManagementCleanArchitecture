@@ -2,7 +2,7 @@
 
 namespace FilmManagement.Application.Abstracts.Repositories
 {
-    public interface ICustomerFavoriteGenreRepository : IBaseRepository<CustomerFavoriteGenre,Guid>
+    public interface IFilmRatingRepository : IBaseRepository<FilmRating, Guid>
     {
     }
 }

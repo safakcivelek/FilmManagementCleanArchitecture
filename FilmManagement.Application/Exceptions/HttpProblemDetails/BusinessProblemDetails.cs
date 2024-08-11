@@ -9,7 +9,7 @@ namespace FilmManagement.Application.Exceptions.HttpProblemDetails
         {
             Title = "Kural ihlali";
             Detail = detail;
-            Status = StatusCodes.Status400BadRequest;
+            Status = StatusCodes.Status400BadRequest; // 422 olabilrmi ?
             Type = "https://example.com/probs/business";
         }
     }

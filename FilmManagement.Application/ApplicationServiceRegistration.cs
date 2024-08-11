@@ -34,14 +34,13 @@ namespace FilmManagement.Application
             
 
             services.AddScoped<IActorService, ActorService>();
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<ICustomerFavoriteGenreService, CustomerFavoriteGenreService>();
             services.AddScoped<IDirectorService, DirectorService>();
             services.AddScoped<IFilmService, FilmService>();
             services.AddScoped<IFilmActorService, FilmActorService>();
             services.AddScoped<IFilmGenreService, FilmGenreService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IPurchaseService, PurchaseService>();
+            services.AddScoped<IFilmRatingService, FilmRatingService>();
 
             return services;
         }
