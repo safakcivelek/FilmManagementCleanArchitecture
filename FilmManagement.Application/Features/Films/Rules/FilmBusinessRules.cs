@@ -22,6 +22,14 @@ namespace FilmManagement.Application.Features.Films.Rules
             _directorService = directorService;
         }
 
+        //Film Delecelendirme sırasında bulunamadı
+        public async Task FilmShouldExistWhenRating(Guid filmId)
+        {
+            bool doesExist = await _filmService.AnyAsync(f => f.Id == filmId);
+            if (!doesExist)
+                throw new NotFoundException(FilmBusinessMessages.FilmNotFoundWhenRating);           
+        }
+
         // Film adının ekleme sırasında benzersiz olduğunu doğrular
         public async Task FilmNameShouldNotExistsWhenInsert(string filmName)
         {

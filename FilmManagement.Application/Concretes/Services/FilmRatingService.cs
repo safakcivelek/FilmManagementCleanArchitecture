@@ -1,6 +1,7 @@
 ﻿using FilmManagement.Application.Abstracts.Repositories;
 using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Application.Common.Responses;
+using FilmManagement.Application.Features.FilmRatings.Constants;
 using FilmManagement.Domain.Entities;
 using System.Threading.Tasks;
 
@@ -10,35 +11,45 @@ namespace FilmManagement.Application.Concretes.Services
     {
         private readonly IFilmRatingRepository _filmRatingRepository;
         private readonly IFilmRepository _filmRepository;
+        private readonly IFilmService _filmService;
 
-        public FilmRatingService(IFilmRatingRepository filmRatingRepository, IFilmRepository filmRepository)
+        public FilmRatingService(IFilmRatingRepository filmRatingRepository, IFilmRepository filmRepository, IFilmService filmService)
         {
             _filmRatingRepository = filmRatingRepository;
             _filmRepository = filmRepository;
+            _filmService = filmService;
         }
 
         public async Task<ApiResponse<FilmRating>> AddRatingAsync(FilmRating rating)
         {
-            var addedRating = await _filmRatingRepository.AddAsync(rating);
-            await UpdateFilmScoreAsync(rating.Id);
-            return new ApiResponse<FilmRating>(addedRating, "Puan başarıyla eklend.");
+            // Ara tabloya, puanlayan kullanıcıyı ve puanını ekle
+            FilmRating addedUserRating = await _filmRatingRepository.AddAsync(rating);
+
+            // Filmin ortalama puanını güncelle
+            await UpdateFilmRatingAsync(rating.FilmId);
+
+            return new ApiResponse<FilmRating>(addedUserRating, FilmRatingServiceMessages.FilmRatingAddedSuccessfully);
         }
 
-        public async Task<double> CalculateFilmScoreAsync(Guid filmId)
-        {
-            var ratings = await _filmRatingRepository.GetListAsync(r => r.Id == filmId);
-            return ratings.Any() ? ratings.Average(r => r.Rating) : 0.0;
-        }
 
-        private async Task UpdateFilmScoreAsync(Guid filmId)
+        private async Task UpdateFilmRatingAsync(Guid filmId)
         {
-            var score = await CalculateFilmScoreAsync(filmId);
-            var film = await _filmRepository.GetAsync(f => f.Id == filmId);
-            if (film != null)
+            double UpdatedRating = await CalculateFilmRatingAsync(filmId);
+
+            Film? film = await _filmRepository.GetAsync(f => f.Id == filmId);
+            if(film != null)
             {
-                film.Score = score;
+                film.Score = UpdatedRating;
                 await _filmRepository.UpdateAsync(film);
             }
         }
+
+        // Puan ortalamasını hesaplayan metod
+        public async Task<double> CalculateFilmRatingAsync(Guid filmId)
+        {
+            IList<FilmRating> ratingsList = await _filmRatingRepository.GetListAsync(r => r.Id == filmId);
+            double UpdatedRating = ratingsList.Average(r => r.Rating);
+            return UpdatedRating;
+        }     
     }
 }

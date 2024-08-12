@@ -3,7 +3,7 @@
     public class FilmRating : BaseEntity<Guid>
     {
         public Guid UserId { get; set; }
-        public Guid RoleId { get; set; }
+        public Guid FilmId { get; set; }
         public double Rating { get; set; } // 0.0 - 10.0 arası puan
 
         public User User { get; set; }
