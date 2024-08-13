@@ -30,6 +30,13 @@ namespace FilmManagement.Application.Exceptions.Handlers
             return Response.WriteAsync(details);
         }
 
+        protected override Task HandleException(AuthorizationException authorizationException)
+        {
+            Response.StatusCode = StatusCodes.Status401Unauthorized;
+            string details = new AuthorizationProblemDetails(authorizationException.Message).AsJson();
+            return Response.WriteAsync(details);
+        }
+
         protected override Task HandleException(ValidationException validationException)
         {
             Response.StatusCode = StatusCodes.Status400BadRequest;
