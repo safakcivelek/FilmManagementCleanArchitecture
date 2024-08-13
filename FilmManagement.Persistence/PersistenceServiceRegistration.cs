@@ -1,4 +1,5 @@
 ﻿using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Domain.Entities;
 using FilmManagement.Persistence.Contexts;
 using FilmManagement.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,18 @@ namespace FilmManagement.Persistence
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             services.AddScoped<IFilmRatingRepository, FilmRatingRepository>();
+
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 2;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+                opt.SignIn.RequireConfirmedEmail = false;
+
+            }).AddRoles<Role>().AddEntityFrameworkStores<BaseDbContext>();
+
             return services;
         }
     }
