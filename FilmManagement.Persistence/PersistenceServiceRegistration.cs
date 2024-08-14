@@ -2,6 +2,7 @@
 using FilmManagement.Domain.Entities;
 using FilmManagement.Persistence.Contexts;
 using FilmManagement.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,7 @@ namespace FilmManagement.Persistence
 {
     public static class PersistenceServiceRegistration
     {
-        public static IServiceCollection AddPersistenceServices(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("FilmManagementConnectionString")));
 
@@ -23,7 +24,7 @@ namespace FilmManagement.Persistence
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             services.AddScoped<IFilmRatingRepository, FilmRatingRepository>();
 
-            services.AddIdentityCore<User>(opt =>
+            services.AddIdentity<User, Role>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequiredLength = 2;
@@ -32,7 +33,9 @@ namespace FilmManagement.Persistence
                 opt.Password.RequireDigit = false;
                 opt.SignIn.RequireConfirmedEmail = false;
 
-            }).AddRoles<Role>().AddEntityFrameworkStores<BaseDbContext>();
+            })
+                .AddEntityFrameworkStores<BaseDbContext>()
+                .AddDefaultTokenProviders();
 
             return services;
         }
