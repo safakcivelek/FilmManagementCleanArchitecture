@@ -6,6 +6,7 @@ using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Application.Features.Films.Queries.GetById;
 using FilmManagement.Application.Features.Films.Queries.GetList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmManagement.API.Controllers
@@ -28,6 +29,8 @@ namespace FilmManagement.API.Controllers
             return Ok(response);
         }
 
+        //[Authorize(Roles ="user")]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] GetListFilmQueryRequest request)
         {

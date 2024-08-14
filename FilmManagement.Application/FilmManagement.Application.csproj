@@ -41,4 +41,8 @@
     <ProjectReference Include="..\FilmManagement.Domain\FilmManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Concretes\Tokens\" />
+  </ItemGroup>
+
 </Project>

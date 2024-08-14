@@ -1,9 +1,11 @@
 using FilmManagement.Application;
 using FilmManagement.Application.Exceptions.Extensions;
 using FilmManagement.Application.Pipelines.Validation;
+using FilmManagement.Infrastructure;
 using FilmManagement.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 
@@ -15,6 +17,7 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // Default exception'ý devre dýþý býrakýr.
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -23,10 +26,39 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Film Management API", Version = "v1" });
+
+    // JWT Bearer Authentication için Swagger ayarlarý
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Aþaðýdaki metin kutusuna 'Bearer' [boþluk] ve ardýndan geçerli token'ýnýzý girin.\r\n\r\nÖrnek: \"Bearer 12345abcdef\"",
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 
 var app = builder.Build();
 
@@ -41,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.ConfigureCustomExceptionMiddleware();
+//app.ConfigureCustomExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

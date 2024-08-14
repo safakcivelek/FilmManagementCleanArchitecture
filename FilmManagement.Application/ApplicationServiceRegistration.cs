@@ -9,13 +9,12 @@ using FilmManagement.Application.Pipelines.Validation;
 using DirectorManagement.Application.Concretes.Services;
 
 
-
 namespace FilmManagement.Application
 {
     public static class ApplicationServiceRegistration
     {
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
-        {
+        {          
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(configuration =>
