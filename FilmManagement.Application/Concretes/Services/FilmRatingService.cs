@@ -3,7 +3,6 @@ using FilmManagement.Application.Abstracts.Services;
 using FilmManagement.Application.Common.Responses;
 using FilmManagement.Application.Features.FilmRatings.Constants;
 using FilmManagement.Domain.Entities;
-using System.Threading.Tasks;
 
 namespace FilmManagement.Application.Concretes.Services
 {
@@ -37,19 +36,25 @@ namespace FilmManagement.Application.Concretes.Services
             double UpdatedRating = await CalculateFilmRatingAsync(filmId);
 
             Film? film = await _filmRepository.GetAsync(f => f.Id == filmId);
-            if(film != null)
+            if (film != null)
             {
                 film.Score = UpdatedRating;
                 await _filmRepository.UpdateAsync(film);
             }
         }
 
-        // Puan ortalamasını hesaplayan metod
+        // Puan ortalamasını hesaplar
         public async Task<double> CalculateFilmRatingAsync(Guid filmId)
-        {
-            IList<FilmRating> ratingsList = await _filmRatingRepository.GetListAsync(r => r.Id == filmId);
+        {       
+            IList<FilmRating> ratingsList = await _filmRatingRepository.GetListAsync(r => r.FilmId == filmId);
+
+            // Eğer rating listesi boşsa 0 döndür
+            if (!ratingsList.Any())
+                return 0;
+
+            // Ortalama rating'i hesapla ve döndür
             double UpdatedRating = ratingsList.Average(r => r.Rating);
             return UpdatedRating;
-        }     
+        }
     }
 }
