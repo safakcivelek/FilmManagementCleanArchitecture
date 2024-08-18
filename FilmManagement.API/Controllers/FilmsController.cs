@@ -30,7 +30,7 @@ namespace FilmManagement.API.Controllers
         }
 
         //[Authorize(Roles ="user")]
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] GetListFilmQueryRequest request)
         {

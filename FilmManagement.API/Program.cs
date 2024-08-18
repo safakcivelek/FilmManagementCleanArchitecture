@@ -59,6 +59,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// CORS policy ekleme
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyOrigins", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") 
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -73,9 +84,12 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-//app.ConfigureCustomExceptionMiddleware();
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseHttpsRedirection();
+
+// Middleware'de CORS kullanýmý
+app.UseCors("MyOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
