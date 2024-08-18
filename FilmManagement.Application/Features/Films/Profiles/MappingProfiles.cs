@@ -22,8 +22,12 @@ namespace FilmManagement.Application.Features.Films.Profiles
                   .Select(fg => fg.Genre))).ReverseMap();
 
             //GetById
-            CreateMap<Film, GetByIdFilmResponseDto>().ReverseMap(); 
-            
+            CreateMap<Film, GetByIdFilmResponseDto>()
+                  .ForMember(dest => dest.Actors, opt => opt.MapFrom(src => src.FilmActors
+                  .Select(fa => fa.Actor)))
+                  .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.FilmGenres
+                  .Select(fg => fg.Genre))).ReverseMap();
+
 
             //Add
             CreateMap<CreateFilmCommandRequest, Film>().ReverseMap();

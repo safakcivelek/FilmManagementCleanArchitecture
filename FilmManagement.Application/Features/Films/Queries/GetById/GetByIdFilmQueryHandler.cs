@@ -4,6 +4,7 @@ using FilmManagement.Application.Common.Responses;
 using FilmManagement.Application.Features.Films.Dtos;
 using FilmManagement.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmManagement.Application.Features.Films.Queries.GetById
 {
@@ -19,9 +20,16 @@ namespace FilmManagement.Application.Features.Films.Queries.GetById
         }
 
         public async Task<ApiResponse<GetByIdFilmResponseDto>> Handle(GetByIdFilmQueryRequest request, CancellationToken cancellationToken)
-        {        
+        {
             ApiResponse<Film?> getFilmResponse = await _filmService.GetAsync(
                 predicate: f => f.Id == request.Id,
+                include: film => film
+                              .Include(film => film.Director)
+                             .Include(film => film.FilmGenres)
+                                .ThenInclude(filmGenre => filmGenre.Genre)
+                             .Include(film => film.FilmActors)
+                                .ThenInclude(filmActor => filmActor.Actor),
+
                 withDeleted: true,
                 enableTracking: false);
 
