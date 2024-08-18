@@ -13,6 +13,7 @@ namespace FilmManagement.Persistence.EntityConfigurations
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
             builder.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(50);
             builder.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(50);
+            builder.Property(a => a.Description).HasColumnName("Description").HasMaxLength(500);
 
             builder.Property(a => a.CreatedDate).HasColumnName("CreatedDate").IsRequired();
             builder.Property(a => a.UpdatedDate).HasColumnName("UpdatedDate");
