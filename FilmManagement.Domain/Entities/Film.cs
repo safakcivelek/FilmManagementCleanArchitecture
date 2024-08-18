@@ -9,6 +9,9 @@
         public int Duration { get; set; }
         public double Score { get; set; } // Ortalama IMDB Paunı
 
+        public string Image { get; set; }
+        public string Video { get; set; }
+
         public Guid? DirectorId { get; set; }
 
         public Director? Director { get; set; }
