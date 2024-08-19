@@ -34,7 +34,9 @@ namespace FilmManagement.Persistence.Repositories
 
         public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true,
-            bool withDeleted = false
+            bool withDeleted = false,
+            int? skip = 0,
+            int? take = 10
             )
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
@@ -43,11 +45,12 @@ namespace FilmManagement.Persistence.Repositories
             if (!withDeleted)
                 queryable = queryable.Where(e => e.IsActive);
             else
-                queryable = queryable.IgnoreQueryFilters(); 
+                queryable = queryable.IgnoreQueryFilters();
             if (include != null)
                 queryable = include(queryable);
             if (predicate != null)
                 queryable = queryable.Where(predicate);
+            queryable = queryable.Skip(skip.Value).Take(take.Value);
             return await queryable.ToListAsync();
         }
 
@@ -61,6 +64,18 @@ namespace FilmManagement.Persistence.Repositories
             if (predicate != null)
                 queryable = queryable.Where(predicate);
             return await queryable.AnyAsync();
+        }
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
+        {
+            IQueryable<TEntity> queryable = _context.Set<TEntity>();
+            if (!enableTracking)
+                queryable = queryable.AsNoTracking();
+            if (withDeleted)
+                queryable = queryable.Where(e => e.IsActive);
+            if (predicate != null)
+                queryable = queryable.Where(predicate);
+            return await queryable.CountAsync();
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)
@@ -132,6 +147,8 @@ namespace FilmManagement.Persistence.Repositories
 
             await _context.SaveChangesAsync();
             return null;
-        }      
+        }
+
+
     }
 }
