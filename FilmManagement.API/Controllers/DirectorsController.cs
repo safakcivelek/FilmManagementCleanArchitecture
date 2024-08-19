@@ -31,7 +31,7 @@ namespace DirectorManagement.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] GetListDirectorQueryRequest request)
         {
-            ApiListResponse<GetListDirectorResponseDto> response = await _mediator.Send(request);
+            ApiPagedResponse<GetListDirectorResponseDto> response = await _mediator.Send(request);
             return Ok(response);
         }
 

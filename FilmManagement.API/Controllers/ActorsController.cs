@@ -31,7 +31,7 @@ namespace FilmManagement.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] GetListActorQueryRequest request)
         {
-            ApiListResponse<GetListActorResponseDto> response = await _mediator.Send(request);
+            ApiPagedResponse<GetListActorResponseDto> response = await _mediator.Send(request);
             return Ok(response);
         }
 
