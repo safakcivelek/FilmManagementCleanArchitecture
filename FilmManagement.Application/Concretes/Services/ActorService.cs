@@ -25,13 +25,13 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Actor>(actor, ActorServiceMessages.ActorRetrievedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Actor>> GetListAsync(Expression<Func<Actor, bool>>? predicate = null, Func<IQueryable<Actor>, IIncludableQueryable<Actor, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Actor>> GetListAsync(Expression<Func<Actor, bool>>? predicate = null, Func<IQueryable<Actor>, IIncludableQueryable<Actor, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
             IList<Actor> actorList = await _actorRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
             if (actorList.Count == 0)
                 //Bu metot içinde hiç actor bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç actor bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir actor bulunamadığında) kullanılır.
-                return new ApiListResponse<Actor>(actorList, ActorServiceMessages.NoActorsFound, 404); // Düzenle 404/200 ?
-            return new ApiListResponse<Actor>(actorList, ActorServiceMessages.ActorsListedSuccessfully);
+                return new ApiPagedResponse<Actor>(actorList, ActorServiceMessages.NoActorsFound, 404); // Düzenle 404/200 ?
+            return new ApiPagedResponse<Actor>(actorList, ActorServiceMessages.ActorsListedSuccessfully);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<Actor, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
@@ -57,22 +57,22 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Actor>(deletedActor, ActorServiceMessages.ActorDeletedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Actor>> AddRangeAsync(IList<Actor> actors)
+        public async Task<ApiPagedResponse<Actor>> AddRangeAsync(IList<Actor> actors)
         {
             IList<Actor> addedActors = await _actorRepository.AddRangeAsync(actors);
-            return new ApiListResponse<Actor>(addedActors, ActorServiceMessages.ActorsAddedSuccessfully);
+            return new ApiPagedResponse<Actor>(addedActors, ActorServiceMessages.ActorsAddedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Actor>> UpdateRangeAsync(IList<Actor> actors)
+        public async Task<ApiPagedResponse<Actor>> UpdateRangeAsync(IList<Actor> actors)
         {
             IList<Actor> updatedActors = await _actorRepository.UpdateRangeAsync(actors);
-            return new ApiListResponse<Actor>(updatedActors, ActorServiceMessages.ActorsUpdatedSuccessfully);
+            return new ApiPagedResponse<Actor>(updatedActors, ActorServiceMessages.ActorsUpdatedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Actor>> DeleteRangeAsync(IList<Actor> actors)
+        public async Task<ApiPagedResponse<Actor>> DeleteRangeAsync(IList<Actor> actors)
         {
             IList<Actor> deletedActors = await _actorRepository.DeleteRangeAsync(actors);
-            return new ApiListResponse<Actor>(deletedActors, ActorServiceMessages.ActorsDeletedSuccessfully);
+            return new ApiPagedResponse<Actor>(deletedActors, ActorServiceMessages.ActorsDeletedSuccessfully);
         }
     }
 }

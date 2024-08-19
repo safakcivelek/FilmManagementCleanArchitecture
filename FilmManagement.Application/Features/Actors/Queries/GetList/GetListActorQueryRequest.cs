@@ -4,7 +4,7 @@ using MediatR;
 
 namespace FilmManagement.Application.Features.Actors.Queries.GetList
 {
-    public class GetListActorQueryRequest : IRequest<ApiListResponse<GetListActorResponseDto>>
+    public class GetListActorQueryRequest : IRequest<ApiPagedResponse<GetListActorResponseDto>>
     {
     }
 }

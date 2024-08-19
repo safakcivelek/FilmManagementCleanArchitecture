@@ -26,13 +26,13 @@ namespace DirectorManagement.Application.Concretes.Services
             return new ApiResponse<Director>(director, DirectorServiceMessages.DirectorRetrievedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Director>> GetListAsync(Expression<Func<Director, bool>>? predicate = null, Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Director>> GetListAsync(Expression<Func<Director, bool>>? predicate = null, Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
             IList<Director> directorList = await _directorRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
             if (directorList.Count == 0)
                 //Bu metot içinde hiç director bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç director bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir director bulunamadığında) kullanılır.
-                return new ApiListResponse<Director>(directorList, DirectorServiceMessages.NoDirectorsFound, 404); // Düzenle 404/200 ?
-            return new ApiListResponse<Director>(directorList, DirectorServiceMessages.DirectorsListedSuccessfully);
+                return new ApiPagedResponse<Director>(directorList, DirectorServiceMessages.NoDirectorsFound, 404); // Düzenle 404/200 ?
+            return new ApiPagedResponse<Director>(directorList, DirectorServiceMessages.DirectorsListedSuccessfully);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<Director, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
@@ -58,22 +58,22 @@ namespace DirectorManagement.Application.Concretes.Services
             return new ApiResponse<Director>(deletedDirector, DirectorServiceMessages.DirectorDeletedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Director>> AddRangeAsync(IList<Director> directors)
+        public async Task<ApiPagedResponse<Director>> AddRangeAsync(IList<Director> directors)
         {
             IList<Director> addedDirectors = await _directorRepository.AddRangeAsync(directors);
-            return new ApiListResponse<Director>(addedDirectors, DirectorServiceMessages.DirectorsAddedSuccessfully);
+            return new ApiPagedResponse<Director>(addedDirectors, DirectorServiceMessages.DirectorsAddedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Director>> UpdateRangeAsync(IList<Director> directors)
+        public async Task<ApiPagedResponse<Director>> UpdateRangeAsync(IList<Director> directors)
         {
             IList<Director> updatedDirectors = await _directorRepository.UpdateRangeAsync(directors);
-            return new ApiListResponse<Director>(updatedDirectors, DirectorServiceMessages.DirectorsUpdatedSuccessfully);
+            return new ApiPagedResponse<Director>(updatedDirectors, DirectorServiceMessages.DirectorsUpdatedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Director>> DeleteRangeAsync(IList<Director> directors)
+        public async Task<ApiPagedResponse<Director>> DeleteRangeAsync(IList<Director> directors)
         {
             IList<Director> deletedDirectors = await _directorRepository.DeleteRangeAsync(directors);
-            return new ApiListResponse<Director>(deletedDirectors, DirectorServiceMessages.DirectorsDeletedSuccessfully);
+            return new ApiPagedResponse<Director>(deletedDirectors, DirectorServiceMessages.DirectorsDeletedSuccessfully);
         }      
     }
 }

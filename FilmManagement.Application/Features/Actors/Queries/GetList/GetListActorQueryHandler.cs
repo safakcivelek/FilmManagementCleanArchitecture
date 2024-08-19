@@ -7,7 +7,7 @@ using MediatR;
 
 namespace FilmManagement.Application.Features.Actors.Queries.GetList
 {
-    public class GetListActorQueryHandler : IRequestHandler<GetListActorQueryRequest, ApiListResponse<GetListActorResponseDto>>
+    public class GetListActorQueryHandler : IRequestHandler<GetListActorQueryRequest, ApiPagedResponse<GetListActorResponseDto>>
     {
         private readonly IActorService _actorService;
         private readonly IMapper _mapper;
@@ -17,15 +17,15 @@ namespace FilmManagement.Application.Features.Actors.Queries.GetList
             _mapper = mapper;
             _actorService = actorService;
         }
-        public async Task<ApiListResponse<GetListActorResponseDto>> Handle(GetListActorQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ApiPagedResponse<GetListActorResponseDto>> Handle(GetListActorQueryRequest request, CancellationToken cancellationToken)
         {
-            ApiListResponse<Actor> getActorsResponse = await _actorService.GetListAsync(
+            ApiPagedResponse<Actor> getActorsResponse = await _actorService.GetListAsync(
                  withDeleted: false,
                  enableTracking: false
                  );
 
             IList<GetListActorResponseDto> responseDto = _mapper.Map<IList<GetListActorResponseDto>>(getActorsResponse.Data);
-            return new ApiListResponse<GetListActorResponseDto>(responseDto, getActorsResponse.Message);
+            return new ApiPagedResponse<GetListActorResponseDto>(responseDto, getActorsResponse.Message);
         }
     }
 }

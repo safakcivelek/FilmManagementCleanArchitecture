@@ -14,7 +14,7 @@ namespace FilmManagement.Application.Abstracts.Services
         bool withDeleted = false
         );
 
-        Task<ApiListResponse<Director>> GetListAsync(
+        Task<ApiPagedResponse<Director>> GetListAsync(
         Expression<Func<Director, bool>>? predicate = null,
         Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null,
         bool enableTracking = true,
@@ -33,8 +33,8 @@ namespace FilmManagement.Application.Abstracts.Services
 
         Task<ApiResponse<Director>> DeleteAsync(Director director);
 
-        Task<ApiListResponse<Director>> AddRangeAsync(IList<Director> directors);
-        Task<ApiListResponse<Director>> UpdateRangeAsync(IList<Director> directors);
-        Task<ApiListResponse<Director>> DeleteRangeAsync(IList<Director> directors);
+        Task<ApiPagedResponse<Director>> AddRangeAsync(IList<Director> directors);
+        Task<ApiPagedResponse<Director>> UpdateRangeAsync(IList<Director> directors);
+        Task<ApiPagedResponse<Director>> DeleteRangeAsync(IList<Director> directors);
     }
 }

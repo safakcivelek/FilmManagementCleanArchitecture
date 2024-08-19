@@ -18,13 +18,21 @@ namespace FilmManagement.Application.Abstracts.Repositories
             Expression<Func<TEntity, bool>>? predicate = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true,
-            bool withDeleted = false
+            bool withDeleted = false,
+            int? skip = 0,
+            int? take = 10           
             );
 
         Task<bool> AnyAsync(
             Expression<Func<TEntity, bool>>? predicate = null,
             bool enableTracking = true,
             bool withDeleted = false
+            );
+
+        Task<int> CountAsync(
+            Expression<Func<TEntity,bool>>? predicate = null,
+            bool enableTracking = true,
+            bool withDeleted = false 
             );
 
         Task<TEntity> AddAsync(TEntity entity);

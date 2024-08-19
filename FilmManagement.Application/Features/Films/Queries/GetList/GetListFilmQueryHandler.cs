@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FilmManagement.Application.Features.Films.Queries.GetList
 {
-    public class GetListFilmQueryHandler : IRequestHandler<GetListFilmQueryRequest, ApiListResponse<GetListFilmResponseDto>>
+    public class GetListFilmQueryHandler : IRequestHandler<GetListFilmQueryRequest, ApiPagedResponse<GetListFilmResponseDto>>
     {
         private readonly IFilmService _filmService;
         private readonly IMapper _mapper;
@@ -19,22 +19,42 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
             _filmService = filmService;
         }
 
-        public async Task<ApiListResponse<GetListFilmResponseDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
-        {                
-            ApiListResponse<Film> getFilmsResponse = await _filmService.GetListAsync(
+        public async Task<ApiPagedResponse<GetListFilmResponseDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
+        {
+            // Toplam veri sayısını hesapla
+            int count = await _filmService.CountAsync(
+                predicate: null, // Filtreleme gerekirse burada uygulanabilir
+                withDeleted: false,
+                enableTracking: false
+            );
+
+            int skip = request.Start;
+            int take = request.Limit;
+
+            ApiPagedResponse<Film> getFilmsResponse = await _filmService.GetListAsync(
                 include: film => film
                              .Include(film => film.Director)
                              .Include(film => film.FilmGenres)
                                 .ThenInclude(filmGenre => filmGenre.Genre)
-                             .Include(film=> film.FilmActors)
-                                .ThenInclude(filmActor=>filmActor.Actor),
-                        
+                             .Include(film => film.FilmActors)
+                                .ThenInclude(filmActor => filmActor.Actor),
+
                 withDeleted: false,
-                enableTracking: false
+                enableTracking: false,
+                skip: skip,
+                take: take
                 );
 
             IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);
-            return new ApiListResponse<GetListFilmResponseDto>(responseDto, getFilmsResponse.Message);
+            int pageNumber = (skip / take) + 1;
+            return new ApiPagedResponse<GetListFilmResponseDto>(
+                data: responseDto,
+                totalCount: count,
+                skip: skip,
+                take: take,
+                message: "Filmler başarıyla getirildi.",
+                200
+                );
         }
     }
 }

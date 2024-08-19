@@ -22,23 +22,31 @@ namespace FilmManagement.Application.Concretes.Services
             Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking, withDeleted);
             if (film == null)
                 //Get metodu için, kaynak bulunamadığında 404 status kodu ile birlikte anlamlı bir hata mesajı döndürmek uygun bir yaklaşımdır. Bu durum, özellikle belirli bir kaynağı ararken (örneğin, belirli bir ID'ye sahip bir film) yaygındır ve kullanıcıya doğru bilgi vermek açısından önemlidir.
-                return new ApiResponse<Film>(film,FilmServiceMessages.FilmNotFound,404);
-            return new ApiResponse<Film>(film,FilmServiceMessages.FilmRetrievedSuccessfully);
+                return new ApiResponse<Film>(film, FilmServiceMessages.FilmNotFound, 404);
+            return new ApiResponse<Film>(film, FilmServiceMessages.FilmRetrievedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Film>> GetListAsync(Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Film>> GetListAsync(
+            Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>?
+            include = null, bool enableTracking = true, bool withDeleted = false, int? skip = 0, int? take = 10)
         {
-            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
+            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking, withDeleted,skip,take);
             if (filmList.Count == 0)
                 //Bu metot içinde hiç film bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç film bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir film bulunamadığında) kullanılır.
-                return new ApiListResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 404); // Düzenle 404/200 ?
-            return new ApiListResponse<Film>(filmList, FilmServiceMessages.FilmsListedSuccessfully);
+                return new ApiPagedResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 404); // Düzenle 404/200 ?
+            return new ApiPagedResponse<Film>(filmList, FilmServiceMessages.FilmsListedSuccessfully);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<Film, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
         {
             bool filmExists = await _filmRepository.AnyAsync(predicate, enableTracking, withDeleted);
             return filmExists;
+        }
+
+        public async Task<int> CountAsync(Expression<Func<Film, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
+        {
+            int filmCount = await _filmRepository.CountAsync(predicate, enableTracking, withDeleted);
+            return filmCount;
         }
 
         public async Task<ApiResponse<Film>> AddAsync(Film film)
@@ -58,22 +66,22 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Film>(deletedFilm, FilmServiceMessages.FilmDeletedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Film>> AddRangeAsync(IList<Film> films)
+        public async Task<ApiPagedResponse<Film>> AddRangeAsync(IList<Film> films)
         {
             IList<Film> addedFilms = await _filmRepository.AddRangeAsync(films);
-            return new ApiListResponse<Film>(addedFilms, FilmServiceMessages.FilmsAddedSuccessfully);
+            return new ApiPagedResponse<Film>(addedFilms, FilmServiceMessages.FilmsAddedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Film>> UpdateRangeAsync(IList<Film> films)
+        public async Task<ApiPagedResponse<Film>> UpdateRangeAsync(IList<Film> films)
         {
             IList<Film> updatedFilms = await _filmRepository.UpdateRangeAsync(films);
-            return new ApiListResponse<Film>(updatedFilms, FilmServiceMessages.FilmsUpdatedSuccessfully);
+            return new ApiPagedResponse<Film>(updatedFilms, FilmServiceMessages.FilmsUpdatedSuccessfully);
         }
 
-        public async Task<ApiListResponse<Film>> DeleteRangeAsync(IList<Film> films)
+        public async Task<ApiPagedResponse<Film>> DeleteRangeAsync(IList<Film> films)
         {
             IList<Film> deletedFilms = await _filmRepository.DeleteRangeAsync(films);
-            return new ApiListResponse<Film>(deletedFilms, FilmServiceMessages.FilmsDeletedSuccessfully);
-        }      
+            return new ApiPagedResponse<Film>(deletedFilms, FilmServiceMessages.FilmsDeletedSuccessfully);
+        }
     }
 }

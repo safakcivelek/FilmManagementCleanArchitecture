@@ -14,11 +14,13 @@ namespace FilmManagement.Application.Abstracts.Services
         bool withDeleted = false
         );
 
-        Task<ApiListResponse<Film>> GetListAsync(
+        Task<ApiPagedResponse<Film>> GetListAsync(
         Expression<Func<Film, bool>>? predicate = null,
         Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
         bool enableTracking = true,
-        bool withDeleted = false
+        bool withDeleted = false,
+        int? skip = 0,
+        int? take = 10
         );
 
         Task<bool> AnyAsync(
@@ -27,14 +29,20 @@ namespace FilmManagement.Application.Abstracts.Services
         bool withDeleted = false
         );
 
+        Task<int> CountAsync(
+            Expression<Func<Film, bool>>? predicate = null,
+            bool enableTracking = true,
+            bool withDeleted = false
+            );
+
         Task<ApiResponse<Film>> AddAsync(Film film);
 
         Task<ApiResponse<Film>> UpdateAsync(Film film);
 
         Task<ApiResponse<Film>> DeleteAsync(Film film);
 
-        Task<ApiListResponse<Film>> AddRangeAsync(IList<Film> films);
-        Task<ApiListResponse<Film>> UpdateRangeAsync(IList<Film> films);
-        Task<ApiListResponse<Film>> DeleteRangeAsync(IList<Film> films);
+        Task<ApiPagedResponse<Film>> AddRangeAsync(IList<Film> films);
+        Task<ApiPagedResponse<Film>> UpdateRangeAsync(IList<Film> films);
+        Task<ApiPagedResponse<Film>> DeleteRangeAsync(IList<Film> films);
     }
 }
