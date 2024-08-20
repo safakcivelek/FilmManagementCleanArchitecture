@@ -45,8 +45,7 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
                 take: take
                 );
 
-            IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);
-            int pageNumber = (skip / take) + 1;
+            IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);           
             return new ApiPagedResponse<GetListFilmResponseDto>(
                 data: responseDto,
                 totalCount: count,
