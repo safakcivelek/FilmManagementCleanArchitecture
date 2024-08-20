@@ -1,4 +1,5 @@
-﻿using FilmManagement.Domain.Entities;
+﻿using FilmManagement.Application.Common.Dynamic;
+using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -21,6 +22,15 @@ namespace FilmManagement.Application.Abstracts.Repositories
             bool withDeleted = false,
             int? skip = 0,
             int? take = 10           
+            );
+
+        Task<IList<TEntity>> GetListByDynamicAsync(
+            DynamicQuery dynamic,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+            bool enableTracking = true,
+            bool withDeleted = false,
+            int? skip = 0,
+            int? take = 10
             );
 
         Task<bool> AnyAsync(

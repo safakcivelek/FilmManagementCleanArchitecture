@@ -1,4 +1,5 @@
-﻿using FilmManagement.Application.Common.Responses;
+﻿using FilmManagement.Application.Common.Dynamic;
+using FilmManagement.Application.Common.Responses;
 using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
@@ -21,6 +22,15 @@ namespace FilmManagement.Application.Abstracts.Services
         bool withDeleted = false,
         int? skip = 0,
         int? take = 10
+        );
+       
+        Task<ApiPagedResponse<Film>> GetListByDynamicAsync(
+            DynamicQuery dynamicQuery,
+            Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
+            bool enableTracking = true,
+            bool withDeleted = false,
+            int? skip = 0,
+            int? take = 10
         );
 
         Task<bool> AnyAsync(
