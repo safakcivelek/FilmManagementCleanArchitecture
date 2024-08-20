@@ -1,8 +1,10 @@
 ﻿using FilmManagement.Application.Abstracts.Repositories;
+using FilmManagement.Application.Common.Dynamic;
 using FilmManagement.Domain.Entities;
 using FilmManagement.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Dynamic;
 using System.Linq.Expressions;
 
 namespace FilmManagement.Persistence.Repositories
@@ -32,6 +34,7 @@ namespace FilmManagement.Persistence.Repositories
             return await queryable.FirstOrDefaultAsync(predicate);
         }
 
+        //GetList
         public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true,
             bool withDeleted = false,
@@ -52,6 +55,23 @@ namespace FilmManagement.Persistence.Repositories
                 queryable = queryable.Where(predicate);
             queryable = queryable.Skip(skip.Value).Take(take.Value);
             return await queryable.ToListAsync();
+        }
+
+        //GetListDynamic
+        public async Task<IList<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, 
+            bool enableTracking = true, 
+            bool withDeleted = false, 
+            int? skip = 0, 
+            int? take = 10)
+        {
+            IQueryable<TEntity> queryable = _context.Set<TEntity>().AsQueryable().ToDynamic(dynamic);
+            if (!enableTracking)
+                queryable = queryable.AsNoTracking();
+            if (include != null)
+                queryable = include(queryable);
+            queryable = queryable.Skip(skip.Value).Take(take.Value);
+            return await queryable.ToListAsync(); // withDelete ,skip,take durumlarını yönet.
         }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
@@ -149,6 +169,6 @@ namespace FilmManagement.Persistence.Repositories
             return null;
         }
 
-
+        
     }
 }
