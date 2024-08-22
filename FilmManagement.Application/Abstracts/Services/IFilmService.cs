@@ -8,6 +8,13 @@ namespace FilmManagement.Application.Abstracts.Services
 {
     public interface IFilmService
     {
+        Task<IList<Film>> GetFilmsByDynamicAsync(DynamicQuery dynamicQuery,
+        Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
+        bool enableTracking = true,
+        bool withDeleted = false,
+        int? skip = null,
+        int? take = null);
+
         Task<ApiResponse<Film?>> GetAsync(
         Expression<Func<Film, bool>> predicate,
         Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,

@@ -30,7 +30,7 @@ public class GetDynamicListFilmQueryHandler : IRequestHandler<GetListFilmQueryRe
         int skip = request.Start;
         int take = request.Limit;
 
-        ApiPagedResponse<Film> getFilmsResponse = await _filmService.GetListByDynamicAsync(
+        var getFilmsResponse = await _filmService.GetFilmsByDynamicAsync(
             dynamicQuery: request.DynamicQuery,
             include: film => film
                          .Include(film => film.Director)
@@ -45,7 +45,7 @@ public class GetDynamicListFilmQueryHandler : IRequestHandler<GetListFilmQueryRe
             take: take
             );
 
-        IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);
+        IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse);
         return new ApiPagedResponse<GetListFilmResponseDto>(
             data: responseDto,
             totalCount: count,

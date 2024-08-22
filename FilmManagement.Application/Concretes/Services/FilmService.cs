@@ -18,6 +18,17 @@ namespace FilmManagement.Application.Concretes.Services
             _filmRepository = filmRepository;
         }
 
+        public async Task<IList<Film>> GetFilmsByDynamicAsync(
+            DynamicQuery dynamicQuery,
+            Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
+            bool enableTracking = true,
+            bool withDeleted = false,
+            int? skip = 0,
+            int? take = 10)
+        {
+            return await _filmRepository.GetFilmsByDynamicAsync(dynamicQuery, include, enableTracking, withDeleted, skip, take);
+        }
+
         public async Task<ApiResponse<Film>?> GetAsync(Expression<Func<Film, bool>> predicate, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
         {
             Film? film = await _filmRepository.GetAsync(predicate, include, enableTracking, withDeleted);
