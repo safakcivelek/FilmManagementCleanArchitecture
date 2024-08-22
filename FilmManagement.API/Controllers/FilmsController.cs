@@ -31,8 +31,8 @@ namespace FilmManagement.API.Controllers
 
         //[Authorize(Roles ="user")]
         //[Authorize]
-        [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] GetListFilmQueryRequest request)
+        [HttpPost("list")]   
+        public async Task<IActionResult> GetList([FromBody] GetListFilmQueryRequest request)
         {
             ApiPagedResponse<GetListFilmResponseDto> response = await _mediator.Send(request);
             return Ok(response);
