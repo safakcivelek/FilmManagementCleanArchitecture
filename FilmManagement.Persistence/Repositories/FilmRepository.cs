@@ -24,16 +24,8 @@ namespace FilmManagement.Persistence.Repositories
         {
             IQueryable<Film> queryable = _context.Films.AsQueryable().ToDynamic(dynamicQuery);
 
-            queryable = queryable
-           .Include(f => f.FilmGenres)
-               .ThenInclude(fg => fg.Genre)
-           .Include(f => f.Director)
-           .Include(f => f.FilmActors)
-               .ThenInclude(fa => fa.Actor);
-
             if (include != null)
-                queryable = include(queryable);
-           
+                queryable = include(queryable);         
 
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
