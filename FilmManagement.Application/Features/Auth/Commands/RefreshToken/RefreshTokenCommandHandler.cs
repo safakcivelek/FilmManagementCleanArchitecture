@@ -38,13 +38,8 @@ namespace FilmManagement.Application.Features.Auth.Commands.RefreshToken
             // Refresh token'ı doğrula
             await _authBusinessRules.RefreshTokenShouldBeValid(user, request.RefreshToken);
 
-            // Yeni Access ve Refresh Token oluştur
-            string newAccessToken = await _tokenService.GenerateAccessTokenAsync(user);
-            string newRefreshToken = await _tokenService.GenerateRefreshTokenAsync(user);
-
-            // Yeni Refresh Token'ı kullanıcıya kaydet
-            user.RefreshToken = newRefreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(_tokenSettings.RefreshTokenValidityInDays);
+            // Yeni Access Token oluştur
+            string newAccessToken = await _tokenService.GenerateAccessTokenAsync(user);        
 
             IdentityResult result =await _userManager.UpdateAsync(user);
 
@@ -59,7 +54,7 @@ namespace FilmManagement.Application.Features.Auth.Commands.RefreshToken
             var response = new RefreshTokenResponseDto
             {
                 AccessToken = newAccessToken,
-                RefreshToken = newRefreshToken,
+                RefreshToken = request.RefreshToken,
                 Expiration = expiration
             };
 
