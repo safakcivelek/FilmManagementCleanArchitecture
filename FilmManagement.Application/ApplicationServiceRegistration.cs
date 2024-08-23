@@ -7,6 +7,10 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using FilmManagement.Application.Pipelines.Validation;
 using DirectorManagement.Application.Concretes.Services;
+using FilmManagement.Application.Common.Responses;
+using FilmManagement.Application.Features.Films.Dtos;
+using FilmManagement.Application.Features.Films.Queries.GetList;
+using MediatR;
 
 
 namespace FilmManagement.Application
@@ -15,6 +19,7 @@ namespace FilmManagement.Application
     {
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {          
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(configuration =>
@@ -22,6 +27,11 @@ namespace FilmManagement.Application
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));                 
             });
+
+            services.AddTransient<IRequestHandler<GetListFilmQueryRequest, ApiPagedResponse<GetListFilmResponseDto>>, FilmQueryDispatcher>();
+            services.AddTransient<GetListFilmQueryHandler>();
+            services.AddTransient<GetDynamicListFilmQueryHandler>();
+
 
             services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
 
