@@ -27,9 +27,9 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
                 withDeleted: false,
                 enableTracking: false
             );
-
-            int skip = request.Start;
-            int take = request.Limit;
+         
+            int skip = request.Start ?? 0; 
+            int take = request.Limit ?? 10; 
 
             ApiPagedResponse<Film> getFilmsResponse = await _filmService.GetListAsync(
                 include: film => film

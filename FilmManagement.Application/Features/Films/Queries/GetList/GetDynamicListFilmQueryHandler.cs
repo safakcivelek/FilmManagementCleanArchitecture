@@ -26,9 +26,9 @@ public class GetDynamicListFilmQueryHandler : IRequestHandler<GetListFilmQueryRe
             withDeleted: false,
             enableTracking: false
         );
-
-        int skip = request.Start;
-        int take = request.Limit;
+      
+        int skip = request.Start ?? 0; 
+        int take = request.Limit ?? 10; 
 
         var getFilmsResponse = await _filmService.GetFilmsByDynamicAsync(
             dynamicQuery: request.DynamicQuery,
