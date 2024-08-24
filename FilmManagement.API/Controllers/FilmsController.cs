@@ -29,10 +29,15 @@ namespace FilmManagement.API.Controllers
             return Ok(response);
         }
 
-        //[Authorize(Roles ="user")]
-        //[Authorize]
-        [HttpPost("list")]   
-        public async Task<IActionResult> GetList([FromBody] GetListFilmQueryRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] GetListFilmQueryRequest request)
+        {
+            ApiPagedResponse<GetListFilmResponseDto> response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        
+        [HttpPost("filtered-list")]   
+        public async Task<IActionResult> GetFilteredList([FromBody] GetListFilmQueryRequest request)
         {
             ApiPagedResponse<GetListFilmResponseDto> response = await _mediator.Send(request);
             return Ok(response);
