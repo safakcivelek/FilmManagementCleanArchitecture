@@ -41,6 +41,7 @@ namespace FilmManagement.Application.Common.Dynamic
             return query;
         }
 
+
         private static IQueryable<T> Filter<T>(IQueryable<T> queryable, Filter filter)
         {
             IList<Filter> allFilters = GetAllFilters(filter);
@@ -50,10 +51,21 @@ namespace FilmManagement.Application.Common.Dynamic
             if (!string.IsNullOrEmpty(text) && array != null)
             {
                 // Eğer sorgu 'FilmGenres.Genre.Name' içeriyorsa, Any kullanarak sorguyu güncelle
-                if (filter.Field == "FilmGenres.Genre.Name")
+                if (allFilters.Any(f => f.Field == "FilmGenres.Genre.Name"))
                 {
-                    string genreName = filter.Value; // Filtrelenen Genre adı
-                    queryable = queryable.Where(f => ((Film)(object)f).FilmGenres.Any(fg => fg.Genre.Name == genreName));
+                    foreach (var nestedFilter in allFilters.Where(f => f.Field == "FilmGenres.Genre.Name"))
+                    {
+                        string genreName = nestedFilter.Value; // Filtrelenen Genre adı
+                        queryable = queryable.Where(f => ((Film)(object)f).FilmGenres.Any(fg => fg.Genre.Name == genreName));
+                    }
+
+                    // Diğer filtreleri uygulama
+                    foreach (var nestedFilter in allFilters.Where(f => f.Field != "FilmGenres.Genre.Name"))
+                    {
+                        string[] nestedArray = { nestedFilter.Value };
+                        string nestedText = $"{nestedFilter.Field} {_operators[nestedFilter.Operator]} @0";
+                        queryable = queryable.Where(nestedText, nestedArray);
+                    }
                 }
                 else
                 {
@@ -64,6 +76,7 @@ namespace FilmManagement.Application.Common.Dynamic
 
             return queryable;
         }
+
 
 
         private static IQueryable<T> Sort<T>(IQueryable<T> queryable, IEnumerable<Sort> sort)
