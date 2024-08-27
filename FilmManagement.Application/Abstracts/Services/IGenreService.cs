@@ -1,4 +1,5 @@
-﻿using FilmManagement.Domain.Entities;
+﻿using FilmManagement.Application.Common.Responses;
+using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -6,20 +7,27 @@ namespace FilmManagement.Application.Abstracts.Services
 {
     public interface IGenreService
     {
-        Task<Genre?> GetAsync(
+        Task<ApiResponse<Genre?>> GetAsync(
         Expression<Func<Genre, bool>> predicate,
         Func<IQueryable<Genre>, IIncludableQueryable<Genre, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<IList<Genre>> GetListAsync(
+        Task<ApiPagedResponse<Genre>> GetListAsync(
         Expression<Func<Genre, bool>>? predicate = null,
         Func<IQueryable<Genre>, IIncludableQueryable<Genre, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false);
 
-        Task<Genre> AddAsync(Genre genre);
-
-        Task<Genre> UpdateAsync(Genre genre);
-
-        Task<Genre> DeleteAsync(Genre genre);
+        Task<bool> AnyAsync(
+        Expression<Func<Genre, bool>>? predicate = null,
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
+  
+        Task<ApiResponse<Genre>> AddAsync(Genre genre);
+        Task<ApiResponse<Genre>> UpdateAsync(Genre genre);
+        Task<ApiResponse<Genre>> DeleteAsync(Genre genre);   
     }
 }

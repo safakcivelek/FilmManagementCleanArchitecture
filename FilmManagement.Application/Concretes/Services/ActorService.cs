@@ -51,6 +51,7 @@ namespace FilmManagement.Application.Concretes.Services
             Actor updatedActor = await _actorRepository.UpdateAsync(actor);
             return new ApiResponse<Actor>(updatedActor, ActorServiceMessages.ActorUpdatedSuccessfully);
         }
+
         public async Task<ApiResponse<Actor>> DeleteAsync(Actor actor)
         {
             Actor deletedActor = await _actorRepository.DeleteAsync(actor);
