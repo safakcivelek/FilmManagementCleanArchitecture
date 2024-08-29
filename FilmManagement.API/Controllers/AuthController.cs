@@ -21,6 +21,14 @@ namespace FilmManagement.API.Controllers
             _mediator = mediator;
         }
 
+        //simulasyon için.
+        [Authorize]
+        [HttpGet("test-authorize")]
+        public IActionResult TestAuthorize()
+        {
+            return Ok("Bu mesaj sadece yetkili kullanıcılar içindir.");
+        }
+
         [HttpPost("register")]
         //[Authorize(Roles ="user")]
         //[Authorize]
