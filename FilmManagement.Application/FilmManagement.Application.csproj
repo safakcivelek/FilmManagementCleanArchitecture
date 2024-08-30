@@ -11,17 +11,14 @@
     <Compile Remove="Features\Customers\**" />
     <Compile Remove="Features\FilmActors\**" />
     <Compile Remove="Features\FilmGenres\**" />
-    <Compile Remove="Features\Purchases\**" />
     <EmbeddedResource Remove="Features\CustomerFavoriteGenres\**" />
     <EmbeddedResource Remove="Features\Customers\**" />
     <EmbeddedResource Remove="Features\FilmActors\**" />
     <EmbeddedResource Remove="Features\FilmGenres\**" />
-    <EmbeddedResource Remove="Features\Purchases\**" />
     <None Remove="Features\CustomerFavoriteGenres\**" />
     <None Remove="Features\Customers\**" />
     <None Remove="Features\FilmActors\**" />
     <None Remove="Features\FilmGenres\**" />
-    <None Remove="Features\Purchases\**" />
   </ItemGroup>
 
   <ItemGroup>

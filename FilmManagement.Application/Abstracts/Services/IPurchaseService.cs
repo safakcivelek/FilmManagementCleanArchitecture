@@ -1,4 +1,5 @@
-﻿using FilmManagement.Domain.Entities;
+﻿using FilmManagement.Application.Common.Responses;
+using FilmManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -6,20 +7,36 @@ namespace FilmManagement.Application.Abstracts.Services
 {
     public interface IPurchaseService
     {
-        Task<Purchase?> GetAsync(
+        Task<ApiResponse<Purchase?>> GetAsync(
         Expression<Func<Purchase, bool>> predicate,
         Func<IQueryable<Purchase>, IIncludableQueryable<Purchase, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<IList<Purchase>> GetListAsync(
+        Task<ApiPagedResponse<Purchase>> GetListAsync(
         Expression<Func<Purchase, bool>>? predicate = null,
         Func<IQueryable<Purchase>, IIncludableQueryable<Purchase, object>>? include = null,
-        bool enableTracking = true);
+        bool enableTracking = true,
+        bool withDeleted = false,
+        int? skip = 0,
+        int? take = 10
+        );
 
-        Task<Purchase> AddAsync(Purchase purchase);
+        Task<bool> AnyAsync(
+        Expression<Func<Purchase, bool>>? predicate = null,
+        bool enableTracking = true,
+        bool withDeleted = false
+        );
 
-        Task<Purchase> UpdateAsync(Purchase purchase);
+        Task<int> CountAsync(
+            Expression<Func<Purchase, bool>>? predicate = null,
+            bool enableTracking = true,
+            bool withDeleted = false
+            );
 
-        Task<Purchase> DeleteAsync(Purchase purchase);
+        Task<ApiResponse<Purchase>> AddAsync(Purchase purchase);
+        Task<ApiResponse<Purchase>> UpdateAsync(Purchase purchase);
+        Task<ApiResponse<Purchase>> DeleteAsync(Purchase purchase);
     }
 }

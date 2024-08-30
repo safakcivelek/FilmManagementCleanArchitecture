@@ -18,6 +18,7 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 
 // Default exception'ý devre dýþý býrakýr.
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -84,7 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.ConfigureCustomExceptionMiddleware();
+//app.ConfigureCustomExceptionMiddleware();
 
 app.UseHttpsRedirection();
 
