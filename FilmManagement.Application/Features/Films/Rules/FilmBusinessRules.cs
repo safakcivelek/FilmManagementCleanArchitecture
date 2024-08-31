@@ -54,20 +54,16 @@ namespace FilmManagement.Application.Features.Films.Rules
                 throw new NotFoundException(FilmBusinessMessages.FilmNotFound);
         }
 
-        // Film eklenirken Genre mevcut olmalı (Genre cqrs tarafı ayarlanınca eklenecek.)
-        //public async Task GenresShouldExistWhenInsert(IEnumerable<Guid> genreIds)
-        //{
-        //    foreach (Guid genreId in genreIds)
-        //    {
-        //        bool doesExist = await _genreService.AnyAsync(g => g.Id == genreId);
-        //        if (!doesExist)
-        //        {
-        //            throw new BusinessException($"Genre with ID {genreId} does not exist.");
-        //        }
-        //    }
-        //}
+        public async Task GenresShouldExistWhenInsert(IEnumerable<Guid> genreIds)
+        {
+            foreach (Guid genreId in genreIds)
+            {
+                bool doesExist = await _genreService.AnyAsync(g => g.Id == genreId);
+                if (!doesExist)          
+                    throw new BusinessException(FilmBusinessMessages.GenresNotValid);               
+            }
+        }    
 
-       
         public async Task ActorsShouldExistWhenInsert(IEnumerable<Guid> actorIds)  //IEnumerable,IList,ICollection ??
         {
             // NOT => Veri Yapıları: IEnumerable<Guid> kullanımı veri üzerinde yineleme yapmak için yeterli ve verimli.Eğer koleksiyon üzerinde ek işlemler (sıralama, indeks erişimi gibi) gerekiyorsa IList veya ICollection kullanılabilir.
