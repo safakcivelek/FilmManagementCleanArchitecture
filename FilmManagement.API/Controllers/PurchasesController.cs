@@ -4,6 +4,7 @@ using FilmManagement.Application.Features.Purchases.Dtos;
 using FilmManagement.Application.Features.Purchases.Queries.CheckIfPurchased;
 using FilmManagement.Application.Features.Purchases.Queries.GetList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -22,6 +23,7 @@ namespace FilmManagement.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add([FromBody] CreatePurchaseCommandRequest request)
         {
             ApiResponse<CreatePurchaseResponseDto> response = await _mediator.Send(request);
