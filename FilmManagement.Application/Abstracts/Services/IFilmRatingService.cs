@@ -5,7 +5,7 @@ namespace FilmManagement.Application.Abstracts.Services
 {
     public interface IFilmRatingService
     {
-        Task<ApiResponse<FilmRating>> AddRatingAsync(FilmRating rating);
+        Task<ApiResponse<FilmRating>> AddOrUpdateRatingAsync(FilmRating rating);
         Task<double> CalculateFilmRatingAsync(Guid filmId);
     }
 }

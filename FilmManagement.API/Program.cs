@@ -85,7 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-//app.ConfigureCustomExceptionMiddleware();
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

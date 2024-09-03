@@ -19,19 +19,29 @@ namespace FilmManagement.Application.Concretes.Services
             _filmService = filmService;
         }
 
-        public async Task<ApiResponse<FilmRating>> AddRatingAsync(FilmRating rating)
+        // Puan ekleme ya da güncelleme işlemi yapar
+        public async Task<ApiResponse<FilmRating>> AddOrUpdateRatingAsync(FilmRating rating)
         {
-            // Ara tabloya, puanlayan kullanıcıyı ve puanını ekle
-            FilmRating addedUserRating = await _filmRatingRepository.AddAsync(rating);
+            var existingRating = await _filmRatingRepository.GetAsync(fr => fr.UserId == rating.UserId && fr.FilmId == rating.FilmId);
+
+            if (existingRating != null)
+            {
+                // Eğer kullanıcı daha önce puan vermişse, puanı güncelle
+                existingRating.Rating = rating.Rating;
+                await _filmRatingRepository.UpdateAsync(existingRating);
+            }
+            else
+                // Eğer kullanıcı daha önce puan vermemişse, yeni puan ekle
+                existingRating = await _filmRatingRepository.AddAsync(rating);
 
             // Filmin ortalama puanını güncelle
-            await UpdateFilmRatingAsync(rating.FilmId);
+            await UpdateFilmAverageRatingAsync(rating.FilmId);
 
-            return new ApiResponse<FilmRating>(addedUserRating, FilmRatingServiceMessages.FilmRatingAddedSuccessfully);
+            return new ApiResponse<FilmRating>(existingRating, FilmRatingServiceMessages.FilmRatingAddedSuccessfully);
         }
 
-
-        private async Task UpdateFilmRatingAsync(Guid filmId)
+        // Filmin ortalama puanını günceller
+        private async Task UpdateFilmAverageRatingAsync(Guid filmId)
         {
             double UpdatedRating = await CalculateFilmRatingAsync(filmId);
 
@@ -45,7 +55,7 @@ namespace FilmManagement.Application.Concretes.Services
 
         // Puan ortalamasını hesaplar
         public async Task<double> CalculateFilmRatingAsync(Guid filmId)
-        {       
+        {
             IList<FilmRating> ratingsList = await _filmRatingRepository.GetListAsync(r => r.FilmId == filmId);
 
             // Eğer rating listesi boşsa 0 döndür

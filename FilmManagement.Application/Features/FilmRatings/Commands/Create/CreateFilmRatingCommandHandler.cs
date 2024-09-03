@@ -26,17 +26,12 @@ namespace FilmManagement.Application.Features.FilmRatings.Commands.Create
         }
 
         public async Task<ApiResponse<CreateFilmRatingResponseDto>> Handle(CreateFilmRatingCommandRequest request, CancellationToken cancellationToken)
-        {
-            // Öncelikle film var mı kontrol edelim
-            await _filmBusinessRules.FilmShouldExistWhenRating(request.FilmId);
-
-            // Kullanıcı aynı filmi birden çok derecelendiremez.
-            await _filmRatingBusinessRules.UserShouldNotRateSameFilmMultipleTimes(request.UserId, request.FilmId);
+        {       
+            await _filmBusinessRules.FilmShouldExistWhenRating(request.FilmId);         
 
             FilmRating filmRating = _mapper.Map<FilmRating>(request);
-            // filmRating.CreatedDate = DateTime.Now; //Burayı oto mapliyor mu kontrol edelim!
-
-            ApiResponse<FilmRating> addedRating = await _filmRatingService.AddRatingAsync(filmRating);
+          
+            ApiResponse<FilmRating> addedRating = await _filmRatingService.AddOrUpdateRatingAsync(filmRating);
 
             CreateFilmRatingResponseDto responseDto = _mapper.Map<CreateFilmRatingResponseDto>(addedRating.Data);
 
