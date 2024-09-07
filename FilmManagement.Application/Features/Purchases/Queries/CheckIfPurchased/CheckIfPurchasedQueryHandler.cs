@@ -24,7 +24,7 @@ namespace FilmManagement.Application.Features.Purchases.Queries.CheckIfPurchased
         {
             string? userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
-                return new ApiResponse<bool>(false, "Kullanıcı kimliği bulunamadı.", 401);  
+                return new ApiResponse<bool>(false, "Kullanıcı kimliği bulunamadı.", 401);               
 
             Purchase? purchase = await _purchaseRepository.GetAsync(p => p.FilmId == request.FilmId && p.UserId == Guid.Parse(userId));
 

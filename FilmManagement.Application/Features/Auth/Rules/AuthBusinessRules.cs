@@ -1,4 +1,5 @@
-﻿using FilmManagement.Application.Exceptions.Types;
+﻿using FilmManagement.Application.Common.Responses;
+using FilmManagement.Application.Exceptions.Types;
 using FilmManagement.Application.Features.Auth.Constants;
 using FilmManagement.Application.Rules;
 using FilmManagement.Domain.Entities;
@@ -55,10 +56,11 @@ namespace FilmManagement.Application.Features.Auth.Rules
                 throw new AuthorizationException(AuthMessages.EmailOrPasswordInvalid);
         }
 
-        public async Task RefreshTokenShouldBeValid(User user,string refreshToken)
+        public async Task<ApiResponse<bool>> RefreshTokenShouldBeValid(User user,string refreshToken)
         {
-            if (user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-               throw new AuthorizationException(AuthMessages.InvalidRefreshToken);         
+            if (user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)        
+                return new ApiResponse<bool>(false, AuthMessages.InvalidRefreshToken, 401);
+            return new ApiResponse<bool>(true, "Refresh token geçerli");
         }
     }
 }
