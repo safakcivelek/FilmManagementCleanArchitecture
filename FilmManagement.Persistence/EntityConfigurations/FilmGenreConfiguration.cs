@@ -15,6 +15,8 @@ namespace FilmManagement.Persistence.EntityConfigurations
             builder.Property(fg => fg.CreatedDate).HasColumnName("CreatedDate").IsRequired();
             builder.Property(fg => fg.UpdatedDate).HasColumnName("UpdatedDate");
             builder.Property(fg => fg.DeletedDate).HasColumnName("DeletedDate");
+
+            builder.HasQueryFilter(fg => !fg.DeletedDate.HasValue);
         }
     }
 }

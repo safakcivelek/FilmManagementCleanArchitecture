@@ -28,7 +28,7 @@ namespace FilmManagement.Persistence.Repositories
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
             if (withDeleted)
-                queryable = queryable.Where(e => e.IsActive);
+                queryable = queryable.IgnoreQueryFilters(); // Global filtreleri devre dışı bırak(HasQueryFilter)   
             if (include != null)
                 queryable = include(queryable);
             return await queryable.FirstOrDefaultAsync(predicate);
@@ -45,10 +45,8 @@ namespace FilmManagement.Persistence.Repositories
             IQueryable<TEntity> queryable = _context.Set<TEntity>();
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
-            if (!withDeleted)
-                queryable = queryable.Where(e => e.IsActive);
-            else
-                queryable = queryable.IgnoreQueryFilters();
+            if (withDeleted)
+                queryable = queryable.IgnoreQueryFilters(); 
             if (include != null)
                 queryable = include(queryable);
             if (predicate != null)
@@ -70,8 +68,10 @@ namespace FilmManagement.Persistence.Repositories
                 queryable = queryable.AsNoTracking();
             if (include != null)
                 queryable = include(queryable);
+            if (withDeleted)
+                queryable = queryable.IgnoreQueryFilters();   
             queryable = queryable.Skip(skip.Value).Take(take.Value);
-            return await queryable.ToListAsync(); // withDelete ,skip,take durumlarını yönet.
+            return await queryable.ToListAsync(); 
         }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
@@ -80,7 +80,7 @@ namespace FilmManagement.Persistence.Repositories
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
             if (withDeleted)
-                queryable = queryable.Where(e => e.IsActive);
+                queryable = queryable.IgnoreQueryFilters();   
             if (predicate != null)
                 queryable = queryable.Where(predicate);
             return await queryable.AnyAsync();
@@ -92,7 +92,7 @@ namespace FilmManagement.Persistence.Repositories
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
             if (withDeleted)
-                queryable = queryable.Where(e => e.IsActive);
+                queryable = queryable.IgnoreQueryFilters();
             if (predicate != null)
                 queryable = queryable.Where(predicate);
             return await queryable.CountAsync();

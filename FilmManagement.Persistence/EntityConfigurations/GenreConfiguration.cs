@@ -18,6 +18,8 @@ namespace FilmManagement.Persistence.EntityConfigurations
             builder.Property(g => g.UpdatedDate).HasColumnName("UpdatedDate");
             builder.Property(g => g.DeletedDate).HasColumnName("DeletedDate");
 
+            builder.HasQueryFilter(g => !g.DeletedDate.HasValue);
+
             // Seed Data
             builder.HasData(GetGenreSeeds());
         }

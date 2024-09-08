@@ -30,13 +30,12 @@ namespace FilmManagement.Persistence.Repositories
             if (!enableTracking)
                 queryable = queryable.AsNoTracking();
 
-            if (!withDeleted)
-                queryable = queryable.Where(f => f.IsActive);
-            else
-                queryable = queryable.IgnoreQueryFilters();
+            if (withDeleted)
+                queryable = queryable.IgnoreQueryFilters(); // Global filtreleri devre dışı bırak(HasQueryFilter)          
 
             if (skip.HasValue)
                 queryable = queryable.Skip(skip.Value);
+
             if (take.HasValue)
                 queryable = queryable.Take(take.Value);
 
