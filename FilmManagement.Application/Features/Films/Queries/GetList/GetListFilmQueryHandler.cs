@@ -27,11 +27,9 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
                 withDeleted: false,
                 enableTracking: false
             );
-         
-            int skip = request.Start ?? 0; 
-            int take = request.Limit ?? 10; 
-
+          
             ApiPagedResponse<Film> getFilmsResponse = await _filmService.GetListAsync(
+               
                 include: film => film
                              .Include(film => film.Director)
                              .Include(film => film.FilmGenres)
@@ -41,16 +39,16 @@ namespace FilmManagement.Application.Features.Films.Queries.GetList
 
                 withDeleted: false,
                 enableTracking: false,
-                skip: skip,
-                take: take
+                take: request.Limit,
+                skip: request.Start
                 );
 
             IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse.Data);           
             return new ApiPagedResponse<GetListFilmResponseDto>(
                 data: responseDto,
                 totalCount: count,
-                skip: skip,
-                take: take,
+                skip: request.Start,
+                take: request.Limit,
                 message: "Filmler başarıyla getirildi.",
                 200
                 );

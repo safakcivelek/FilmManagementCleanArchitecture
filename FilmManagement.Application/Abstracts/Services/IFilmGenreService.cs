@@ -13,6 +13,7 @@ namespace FilmManagement.Application.Abstracts.Services
 
         Task<IList<FilmGenre>> GetListAsync(
         Expression<Func<FilmGenre, bool>>? predicate = null,
+        Func<IQueryable<FilmGenre>, IOrderedQueryable<FilmGenre>>? orderBy = null,
         Func<IQueryable<FilmGenre>, IIncludableQueryable<FilmGenre, object>>? include = null,
         bool enableTracking = true);
 

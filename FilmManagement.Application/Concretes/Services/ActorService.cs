@@ -25,9 +25,13 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Actor>(actor, ActorServiceMessages.ActorRetrievedSuccessfully);
         }
 
-        public async Task<ApiPagedResponse<Actor>> GetListAsync(Expression<Func<Actor, bool>>? predicate = null, Func<IQueryable<Actor>, IIncludableQueryable<Actor, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Actor>> GetListAsync(
+            Expression<Func<Actor, bool>>? predicate = null,
+            Func<IQueryable<Actor>, IOrderedQueryable<Actor>>? orderBy = null,
+            Func<IQueryable<Actor>, IIncludableQueryable<Actor, object>>? include = null, 
+            bool enableTracking = true, bool withDeleted = false)
         {
-            IList<Actor> actorList = await _actorRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
+            IList<Actor> actorList = await _actorRepository.GetListAsync(predicate,orderBy, include, enableTracking, withDeleted);
             if (actorList.Count == 0)
                 //Bu metot içinde hiç actor bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç actor bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir actor bulunamadığında) kullanılır.
                 return new ApiPagedResponse<Actor>(actorList, ActorServiceMessages.NoActorsFound, 404); // Düzenle 404/200 ?

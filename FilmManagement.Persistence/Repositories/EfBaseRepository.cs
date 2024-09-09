@@ -5,6 +5,8 @@ using FilmManagement.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Dynamic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
 namespace FilmManagement.Persistence.Repositories
@@ -35,7 +37,10 @@ namespace FilmManagement.Persistence.Repositories
         }
 
         //GetList
-        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        public async Task<IList<TEntity>> GetListAsync(
+            Expression<Func<TEntity, bool>>? predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
             bool enableTracking = true,
             bool withDeleted = false,
             int? skip = 0,
@@ -51,7 +56,13 @@ namespace FilmManagement.Persistence.Repositories
                 queryable = include(queryable);
             if (predicate != null)
                 queryable = queryable.Where(predicate);
-            queryable = queryable.Skip(skip.Value).Take(take.Value);
+            if (orderBy != null)
+                queryable = orderBy(queryable);
+            if (skip.HasValue)
+                queryable = queryable.Skip(skip.Value);
+            if(take.HasValue)
+            queryable = queryable.Take(take.Value);
+
             return await queryable.ToListAsync();
         }
 
@@ -59,8 +70,8 @@ namespace FilmManagement.Persistence.Repositories
         public async Task<IList<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, 
             bool enableTracking = true, 
-            bool withDeleted = false, 
-            int? skip = 0, 
+            bool withDeleted = false,
+            int? skip = 0,
             int? take = 10)
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>().AsQueryable().ToDynamic(dynamic);
@@ -69,10 +80,14 @@ namespace FilmManagement.Persistence.Repositories
             if (include != null)
                 queryable = include(queryable);
             if (withDeleted)
-                queryable = queryable.IgnoreQueryFilters();   
-            queryable = queryable.Skip(skip.Value).Take(take.Value);
-            return await queryable.ToListAsync(); 
+                queryable = queryable.IgnoreQueryFilters();
+            if (take.HasValue)
+                queryable = queryable.Take(take.Value);
+            if (skip.HasValue)
+                queryable = queryable.Skip(skip.Value);
+            return await queryable.ToListAsync();
         }
+
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null, bool enableTracking = true, bool withDeleted = false)
         {

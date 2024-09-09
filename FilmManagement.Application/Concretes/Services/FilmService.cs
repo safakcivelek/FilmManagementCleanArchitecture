@@ -20,13 +20,14 @@ namespace FilmManagement.Application.Concretes.Services
 
         public async Task<IList<Film>> GetFilmsByDynamicAsync(
             DynamicQuery dynamicQuery,
+            Expression<Func<Film, bool>>? predicate = null,
             Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
             bool enableTracking = true,
             bool withDeleted = false,
             int? skip = 0,
             int? take = 10)
         {
-            return await _filmRepository.GetFilmsByDynamicAsync(dynamicQuery, include, enableTracking, withDeleted, skip, take);
+            return await _filmRepository.GetFilmsByDynamicAsync(dynamicQuery, predicate, include, enableTracking, withDeleted, skip, take);
         }
 
         public async Task<ApiResponse<Film>?> GetAsync(Expression<Func<Film, bool>> predicate, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
@@ -40,10 +41,12 @@ namespace FilmManagement.Application.Concretes.Services
 
         //GetListAsync
         public async Task<ApiPagedResponse<Film>> GetListAsync(
-            Expression<Func<Film, bool>>? predicate = null, Func<IQueryable<Film>, IIncludableQueryable<Film, object>>?
-            include = null, bool enableTracking = true, bool withDeleted = false, int? skip = 0, int? take = 10)
+            Expression<Func<Film, bool>>? predicate = null,
+            Func<IQueryable<Film>, IOrderedQueryable<Film>>? orderBy = null,
+            Func<IQueryable<Film>, IIncludableQueryable<Film, object>>? include = null,
+            bool enableTracking = true, bool withDeleted = false, int? skip = 0, int? take = 10)
         {
-            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, include, enableTracking, withDeleted,skip,take);
+            IList<Film> filmList = await _filmRepository.GetListAsync(predicate, orderBy, include, enableTracking, withDeleted, skip, take);
             if (filmList.Count == 0)
                 //Bu metot içinde hiç film bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç film bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir film bulunamadığında) kullanılır.
                 return new ApiPagedResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 404); // Düzenle 404/200 ?
@@ -58,7 +61,7 @@ namespace FilmManagement.Application.Concretes.Services
             bool withDeleted = false,
             int? skip = 0,
             int? take = 10)
-        {          
+        {
             IList<Film> filmList = await _filmRepository.GetListByDynamicAsync(dynamicQuery, include, enableTracking, withDeleted, skip, take);
             if (filmList.Count == 0)
                 return new ApiPagedResponse<Film>(filmList, FilmServiceMessages.NoFilmsFound, 200);

@@ -21,9 +21,13 @@ namespace FilmManagement.Application.Concretes.Services
             return filmActor;
         }
 
-        public async Task<IList<FilmActor>> GetListAsync(Expression<Func<FilmActor, bool>>? predicate = null, Func<IQueryable<FilmActor>, IIncludableQueryable<FilmActor, object>>? include = null, bool enableTracking = true)
+        public async Task<IList<FilmActor>> GetListAsync(
+            Expression<Func<FilmActor, bool>>? predicate = null,
+            Func<IQueryable<FilmActor>, IOrderedQueryable<FilmActor>>? orderBy = null,
+            Func<IQueryable<FilmActor>, IIncludableQueryable<FilmActor, object>>? include = null,
+            bool enableTracking = true)
         {
-            IList<FilmActor> filmActorList = await _filmActorRepository.GetListAsync(predicate, include, enableTracking);
+            IList<FilmActor> filmActorList = await _filmActorRepository.GetListAsync(predicate,orderBy, include, enableTracking);
             return filmActorList;
         }
 

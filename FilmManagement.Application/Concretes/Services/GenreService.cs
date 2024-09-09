@@ -26,9 +26,13 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Genre>(genre, GenreServiceMessages.GenreRetrievedSuccessfully);      
         }
 
-        public async Task<ApiPagedResponse<Genre>> GetListAsync(Expression<Func<Genre, bool>>? predicate = null, Func<IQueryable<Genre>, IIncludableQueryable<Genre, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Genre>> GetListAsync(
+            Expression<Func<Genre, bool>>? predicate = null,
+            Func<IQueryable<Genre>, IOrderedQueryable<Genre>>? orderBy = null,
+            Func<IQueryable<Genre>, IIncludableQueryable<Genre, object>>? include = null,
+            bool enableTracking = true, bool withDeleted = false)
         {
-            IList<Genre> genreList = await _genreRepository.GetListAsync(predicate, include, enableTracking,withDeleted);
+            IList<Genre> genreList = await _genreRepository.GetListAsync(predicate,orderBy, include, enableTracking,withDeleted);
             if (genreList.Count == 0)
                 return new ApiPagedResponse<Genre>(genreList, GenreServiceMessages.NoGenresFound, 404);  
             return new ApiPagedResponse<Genre>(genreList, GenreServiceMessages.GenresListedSuccessfully);

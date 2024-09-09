@@ -26,9 +26,13 @@ namespace DirectorManagement.Application.Concretes.Services
             return new ApiResponse<Director>(director, DirectorServiceMessages.DirectorRetrievedSuccessfully);
         }
 
-        public async Task<ApiPagedResponse<Director>> GetListAsync(Expression<Func<Director, bool>>? predicate = null, Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null, bool enableTracking = true, bool withDeleted = false)
+        public async Task<ApiPagedResponse<Director>> GetListAsync(
+            Expression<Func<Director, bool>>? predicate = null,
+            Func<IQueryable<Director>, IOrderedQueryable<Director>>? orderBy = null,
+            Func<IQueryable<Director>, IIncludableQueryable<Director, object>>? include = null,
+            bool enableTracking = true, bool withDeleted = false)
         {
-            IList<Director> directorList = await _directorRepository.GetListAsync(predicate, include, enableTracking, withDeleted);
+            IList<Director> directorList = await _directorRepository.GetListAsync(predicate,orderBy, include, enableTracking, withDeleted);
             if (directorList.Count == 0)
                 //Bu metot içinde hiç director bulunamaması durumu, iş akışının normal bir parçası olarak ele alınabilir. Bu durumda, 404 status kodu yerine, 200 status kodu ile "Hiç director bulunamadı" mesajı döndürmek daha uygun olur. 404 status kodu, genellikle kaynak bulunamadığında (örneğin, belirli bir ID'ye sahip bir director bulunamadığında) kullanılır.
                 return new ApiPagedResponse<Director>(directorList, DirectorServiceMessages.NoDirectorsFound, 404); // Düzenle 404/200 ?

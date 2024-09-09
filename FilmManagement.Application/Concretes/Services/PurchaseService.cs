@@ -25,9 +25,13 @@ namespace FilmManagement.Application.Concretes.Services
             return new ApiResponse<Purchase>(purchase, PurchaseServiceMessages.FilmRetrievedSuccessfully);
         }
 
-        public async Task<ApiPagedResponse<Purchase>> GetListAsync(Expression<Func<Purchase, bool>>? predicate = null, Func<IQueryable<Purchase>, IIncludableQueryable<Purchase, object>>? include = null, bool enableTracking = true, bool withDeleted = false, int? skip = 0, int? take = 10)
+        public async Task<ApiPagedResponse<Purchase>> GetListAsync(
+            Expression<Func<Purchase, bool>>? predicate = null,
+            Func<IQueryable<Purchase>, IOrderedQueryable<Purchase>>? orderBy = null,
+            Func<IQueryable<Purchase>, IIncludableQueryable<Purchase, object>>? include = null,
+            bool enableTracking = true, bool withDeleted = false, int? skip = 0, int? take = 10)
         {
-            IList<Purchase> purchaseList = await _purchaseRepository.GetListAsync(predicate, include, enableTracking, withDeleted, skip, take);
+            IList<Purchase> purchaseList = await _purchaseRepository.GetListAsync(predicate, orderBy, include, enableTracking, withDeleted, skip, take);
             if (purchaseList.Count == 0)
                 return new ApiPagedResponse<Purchase>(purchaseList, PurchaseServiceMessages.PurchasedFilmNotFound, 404);
             return new ApiPagedResponse<Purchase>(purchaseList, PurchaseServiceMessages.PurchasedFilmsListedSuccessfully);

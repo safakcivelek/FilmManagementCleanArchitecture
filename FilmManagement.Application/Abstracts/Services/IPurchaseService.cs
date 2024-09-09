@@ -16,6 +16,7 @@ namespace FilmManagement.Application.Abstracts.Services
 
         Task<ApiPagedResponse<Purchase>> GetListAsync(
         Expression<Func<Purchase, bool>>? predicate = null,
+        Func<IQueryable<Purchase>, IOrderedQueryable<Purchase>>? orderBy = null,
         Func<IQueryable<Purchase>, IIncludableQueryable<Purchase, object>>? include = null,
         bool enableTracking = true,
         bool withDeleted = false,

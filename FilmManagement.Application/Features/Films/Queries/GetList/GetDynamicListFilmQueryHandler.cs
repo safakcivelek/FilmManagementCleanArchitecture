@@ -19,19 +19,16 @@ public class GetDynamicListFilmQueryHandler : IRequestHandler<GetListFilmQueryRe
     }
 
     public async Task<ApiPagedResponse<GetListFilmResponseDto>> Handle(GetListFilmQueryRequest request, CancellationToken cancellationToken)
-    {
-        // Toplam veri sayısını hesapla
+    {       
         int count = await _filmService.CountAsync(
-            predicate: null, // Filtreleme gerekirse burada uygulanabilir
+            predicate: null, 
             withDeleted: false,
             enableTracking: false
-        );
-      
-        int skip = request.Start ?? 0; 
-        int take = request.Limit ?? 10; 
+        );  
 
-        var getFilmsResponse = await _filmService.GetFilmsByDynamicAsync(
+        IList<Film> getFilmsResponse = await _filmService.GetFilmsByDynamicAsync(
             dynamicQuery: request.DynamicQuery,
+            
             include: film => film
                          .Include(film => film.Director)
                          .Include(film => film.FilmGenres)
@@ -40,17 +37,18 @@ public class GetDynamicListFilmQueryHandler : IRequestHandler<GetListFilmQueryRe
                             .ThenInclude(filmActor => filmActor.Actor),
 
             withDeleted: false,
-            enableTracking: false,
-            skip: skip,
-            take: take
+            enableTracking: false,          
+            skip:request.Start,
+            take: request.Limit
             );
+     
 
         IList<GetListFilmResponseDto> responseDto = _mapper.Map<IList<GetListFilmResponseDto>>(getFilmsResponse);
         return new ApiPagedResponse<GetListFilmResponseDto>(
             data: responseDto,
             totalCount: count,
-            skip: skip,
-            take: take,
+            skip: request.Start,
+            take: request.Limit,
             message: "Filmler başarıyla getirildi.",
             200
             );
