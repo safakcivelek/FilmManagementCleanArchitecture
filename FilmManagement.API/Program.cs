@@ -65,7 +65,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") 
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://electrofilm.vercel.app",
+            "https://electrofilm.safakcivelek.com",
+            "https://film.safakcivelek.com") 
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
