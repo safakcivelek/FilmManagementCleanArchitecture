@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmManagement.Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240811195115_second")]
-    partial class second
+    [Migration("20240922223438_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,11 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("Description");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -78,6 +83,11 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("Description");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -129,6 +139,10 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Image");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit")
                         .HasColumnName("IsActive");
@@ -149,6 +163,10 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Video");
 
                     b.Property<int>("Year")
                         .HasColumnType("int")
@@ -256,9 +274,6 @@ namespace FilmManagement.Persistence.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -314,32 +329,32 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6850f349-a21e-4c9d-9c2d-36ed68c228fa"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(768),
+                            Id = new Guid("481920ed-ed59-4f2b-903c-9fac87122673"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4775),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
                             IsActive = true,
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("f740f912-714e-4cc6-aefb-57c92567bd58"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(776),
+                            Id = new Guid("52107936-eb59-4453-b148-87f0058e8628"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4784),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
                             IsActive = true,
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("e4c7ae8b-c64d-44d3-943a-92d3bf01b8bc"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(778),
+                            Id = new Guid("d46e08d9-7409-4dcc-8ddf-8b787be2dee5"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4786),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
                             IsActive = true,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("ccc8b3cd-7652-463b-bf63-cbe9090d4610"),
-                            CreatedDate = new DateTime(2024, 8, 11, 19, 51, 14, 585, DateTimeKind.Utc).AddTicks(800),
+                            Id = new Guid("1ffa3470-1dba-4b95-b295-e2544e6cffdc"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4788),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
                             IsActive = true,
                             Name = "Fantastik"
@@ -362,9 +377,6 @@ namespace FilmManagement.Persistence.Migrations
                         .HasColumnName("DeletedDate");
 
                     b.Property<Guid>("FilmId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FimId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -657,7 +669,7 @@ namespace FilmManagement.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("FilmManagement.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("FilmRatings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -765,6 +777,8 @@ namespace FilmManagement.Persistence.Migrations
 
             modelBuilder.Entity("FilmManagement.Domain.Entities.User", b =>
                 {
+                    b.Navigation("FilmRatings");
+
                     b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618

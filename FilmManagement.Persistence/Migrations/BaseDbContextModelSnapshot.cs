@@ -137,7 +137,6 @@ namespace FilmManagement.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Image");
 
@@ -163,7 +162,6 @@ namespace FilmManagement.Persistence.Migrations
                         .HasColumnName("UpdatedDate");
 
                     b.Property<string>("Video")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Video");
 
@@ -328,32 +326,32 @@ namespace FilmManagement.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0c1fec87-f992-4013-86aa-9446f0d87a56"),
-                            CreatedDate = new DateTime(2024, 8, 29, 20, 1, 5, 282, DateTimeKind.Utc).AddTicks(3747),
+                            Id = new Guid("481920ed-ed59-4f2b-903c-9fac87122673"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4775),
                             Description = "Aksiyon filmleri, hızlı tempolu sahneleri ve sürekli hareket içeren maceralar sunar.",
                             IsActive = true,
                             Name = "Aksiyon"
                         },
                         new
                         {
-                            Id = new Guid("ec283ec3-d685-472a-87f6-5b26aea2ec9f"),
-                            CreatedDate = new DateTime(2024, 8, 29, 20, 1, 5, 282, DateTimeKind.Utc).AddTicks(3755),
+                            Id = new Guid("52107936-eb59-4453-b148-87f0058e8628"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4784),
                             Description = "Dram filmleri, insan doğasını ve kişisel ilişkileri derinlemesine ele alır.",
                             IsActive = true,
                             Name = "Dram"
                         },
                         new
                         {
-                            Id = new Guid("9305dfa0-a483-42d8-9675-23d76dcdd96d"),
-                            CreatedDate = new DateTime(2024, 8, 29, 20, 1, 5, 282, DateTimeKind.Utc).AddTicks(3758),
+                            Id = new Guid("d46e08d9-7409-4dcc-8ddf-8b787be2dee5"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4786),
                             Description = "Bilim kurgu filmleri, teknolojinin ve bilimin sınırlarını zorlayan, gelecekte geçen hikayeler sunar.",
                             IsActive = true,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
-                            Id = new Guid("41d479bc-0e03-4149-9a71-b6f971f3bd34"),
-                            CreatedDate = new DateTime(2024, 8, 29, 20, 1, 5, 282, DateTimeKind.Utc).AddTicks(3760),
+                            Id = new Guid("1ffa3470-1dba-4b95-b295-e2544e6cffdc"),
+                            CreatedDate = new DateTime(2024, 9, 22, 22, 34, 37, 640, DateTimeKind.Utc).AddTicks(4788),
                             Description = "Fantastik filmler, sihir, mitoloji ve doğaüstü olaylar içeren fantastik evrenlerde geçer.",
                             IsActive = true,
                             Name = "Fantastik"
