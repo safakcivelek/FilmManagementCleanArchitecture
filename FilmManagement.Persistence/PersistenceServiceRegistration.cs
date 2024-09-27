@@ -2,6 +2,7 @@
 using FilmManagement.Domain.Entities;
 using FilmManagement.Persistence.Contexts;
 using FilmManagement.Persistence.Repositories;
+using FilmManagement.Persistence.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +37,8 @@ namespace FilmManagement.Persistence
             })
                 .AddEntityFrameworkStores<BaseDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<SeedRolesAndUsers>();
 
             return services;
         }

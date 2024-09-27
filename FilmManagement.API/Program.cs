@@ -3,6 +3,7 @@ using FilmManagement.Application.Exceptions.Extensions;
 using FilmManagement.Application.Pipelines.Validation;
 using FilmManagement.Infrastructure;
 using FilmManagement.Persistence;
+using FilmManagement.Persistence.SeedData;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -76,7 +77,16 @@ builder.Services.AddCors(options =>
     });
 });
 
+
 var app = builder.Build();
+
+// Seed iþlemi
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var seedRolesAndUsers = services.GetRequiredService<SeedRolesAndUsers>();
+    await seedRolesAndUsers.SeedAsync(); // Rolleri ve admin kullanýcýsýný eklemek için seed iþlemi baþlatýlýyor
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
