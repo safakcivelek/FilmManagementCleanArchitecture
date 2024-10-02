@@ -21,7 +21,8 @@ namespace FilmManagement.Application.Features.Actors.Queries.GetList
         {
             ApiPagedResponse<Actor> getActorsResponse = await _actorService.GetListAsync(
                  withDeleted: false,
-                 enableTracking: false
+                 enableTracking: false,
+                 orderBy: query => query.OrderByDescending(a => a.CreatedDate) //Bu alanı şimdilik frontende tarihine göre geçici olarak sıralamak için kullanıyorum.
                  );
 
             IList<GetListActorResponseDto> responseDto = _mapper.Map<IList<GetListActorResponseDto>>(getActorsResponse.Data);

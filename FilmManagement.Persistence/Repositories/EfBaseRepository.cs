@@ -44,7 +44,7 @@ namespace FilmManagement.Persistence.Repositories
             bool enableTracking = true,
             bool withDeleted = false,
             int? skip = 0,
-            int? take = 10
+            int? take = 100
             )
         {
             IQueryable<TEntity> queryable = _context.Set<TEntity>();

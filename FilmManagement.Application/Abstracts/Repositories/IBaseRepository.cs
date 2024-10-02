@@ -22,7 +22,7 @@ namespace FilmManagement.Application.Abstracts.Repositories
             bool enableTracking = true,
             bool withDeleted = false,
             int? skip = 0,
-            int? take = 10           
+            int? take = 100           
             );
 
         Task<IList<TEntity>> GetListByDynamicAsync(
