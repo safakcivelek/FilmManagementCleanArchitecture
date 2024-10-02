@@ -29,6 +29,8 @@ namespace FilmManagement.Infrastructure.Services.Tokens
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("FirstName",user.FirstName),
+                new Claim("LastName",user.LastName)
             };
 
             IList<string> userRoles = await _userManager.GetRolesAsync(user);
