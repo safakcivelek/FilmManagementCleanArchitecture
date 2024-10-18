@@ -28,4 +28,4 @@ Açıklama: Film Yönetim Sistemi, kullanıcılara giriş yapmadan film görünt
 ## 🎨 Ekran Görüntüleri
 
 Projemizi aşağıdaki bağlantıdan ziyaret edebilirsiniz:
-[Film Yönetim Sistemi Canlı]((https://electrofilm.safakcivelek.com/))
+https://electrofilm.safakcivelek.com/
