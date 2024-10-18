@@ -30,5 +30,5 @@ Açıklama: Film Yönetim Sistemi, kullanıcılara giriş yapmadan film görünt
 Projemi aşağıdaki bağlantıdan ziyaret edebilirsiniz:
 https://electrofilm.safakcivelek.com/
 
-![Film Yönetim Sistemi Ana Sayfa]([https://via.placeholder.com/800x400](https://media.licdn.com/dms/image/v2/D4E22AQFzgS1SpBdSwQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1728920058522?e=1732147200&v=beta&t=rtKPl4JHwCsvo2Ks9UbAZfv35VH5XH0NRT8RJG_3TKc))  
+https://media.licdn.com/dms/image/v2/D4E22AQFzgS1SpBdSwQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1728920058522?e=1732147200&v=beta&t=rtKPl4JHwCsvo2Ks9UbAZfv35VH5XH0NRT8RJG_3TKc  
 
