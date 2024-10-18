@@ -32,11 +32,5 @@ https://electrofilm.safakcivelek.com/
 
 <img src="[https://i.imgur.com/AbPzjuF.png](https://media.licdn.com/dms/image/v2/D4E22AQFzgS1SpBdSwQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1728920058522?e=1732147200&v=beta&t=rtKPl4JHwCsvo2Ks9UbAZfv35VH5XH0NRT8RJG_3TKc)" width="900px" />
 <br/>
-<img src="https://i.imgur.com/l3VSxbh.png" width="900px" />
-<br/>
-<img src="https://i.imgur.com/eovQZtB.png" width="900px" />
-<br/>
-<img src="https://i.imgur.com/SlsxPD2.png" width="900px" />
-<br/>
-<img src="https://i.imgur.com/4OYPyTK.png" width="500px" />
+
 
